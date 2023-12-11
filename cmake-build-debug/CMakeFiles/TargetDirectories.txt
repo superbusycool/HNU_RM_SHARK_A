@@ -1,0 +1,3 @@
+F:/study/SHARK-A/dist_file/project/project/cmake-build-debug/CMakeFiles/rtthread.elf.dir
+F:/study/SHARK-A/dist_file/project/project/cmake-build-debug/CMakeFiles/edit_cache.dir
+F:/study/SHARK-A/dist_file/project/project/cmake-build-debug/CMakeFiles/rebuild_cache.dir
