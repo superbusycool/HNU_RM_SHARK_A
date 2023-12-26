@@ -9,19 +9,19 @@
 #include "rc_sbus.h"
 #include "rm_config.h"
 #include <stm32f4xx.h>
-#include<string.h>
+#include "string.h"
 
 #define DBG_TAG           "rc.sbus"
-#define DBG_LVL DBG_ERROR
+#define DBG_LVL DBG_INFO
 #include <rtdbg.h>
 
 #define NOW 0
 #define LAST 1
 #define abs(x) ((x > 0) ? x : -x)
 
-/* C板预留的遥控器接口（具备取反电路）为 uart3 */
-UART_HandleTypeDef huart3;
-DMA_HandleTypeDef hdma_usart3_rx;
+/* A板预留的遥控器接口（具备取反电路）为 uart1 */
+UART_HandleTypeDef huart1;
+DMA_HandleTypeDef hdma_usart1_rx;
 
 //接收原始数据，为18个字节，给了36个字节长度，防止DMA传输越界
 static uint8_t sbus_rx_buf[2][SBUS_RX_BUF_NUM];
@@ -48,9 +48,9 @@ static rt_err_t sbus_rc_decode(uint8_t *buff){
         rc_obj[NOW].ch4 = (buff[5] >> 1 | buff[6] << 7) & 0x07FF;
         rc_obj[NOW].ch4 -= 1024;
     /* 旋钮值获取 */
-       rc_obj[NOW].ch5 =((buff[12] | buff[13] << 8) & 0x07FF);
+       rc_obj[NOW].ch5 =((buff[6] >> 4 | buff[7] << 4) & 0x07FF);
        rc_obj[NOW].ch5 -= 1024;
-       rc_obj[NOW].ch6 =((buff[13] >> 3 | buff[14] << 5) & 0x07FF);
+       rc_obj[NOW].ch6 =((buff[7] >> 7 | buff[8] << 1 | buff[9] << 9) & 0x07FF);
        rc_obj[NOW].ch6 -= 1024;
         /* 防止遥控器零点有偏差 */
         if(rc_obj[NOW].ch1 <= 10 && rc_obj[NOW].ch1 >= -10)
@@ -67,9 +67,9 @@ static rt_err_t sbus_rc_decode(uint8_t *buff){
             rc_obj[NOW].ch6 = 0;
         /* 拨杆值获取 */
         rc_obj[NOW].sw1 = ((buff[9] >> 2 | buff[10] << 6) & 0x07FF);
-        rc_obj[NOW].sw2 = ((buff[7] >> 7 | buff[8] << 1 | buff[9] << 9) & 0x07FF);
-        rc_obj[NOW].sw3 =((buff[10] >> 5| buff[11] << 3) & 0x07FF);
-        rc_obj[NOW].sw4 =((buff[6] >> 4 | buff[7] << 4) & 0x07FF);
+        rc_obj[NOW].sw2 = ((buff[10] >> 5 | buff[11] << 3) & 0x07FF);
+        rc_obj[NOW].sw3=((buff[12] | buff[13] << 8) & 0x07FF);
+        rc_obj[NOW].sw4 =((buff[13] >> 3 | buff[14] << 5) & 0x07FF);
         /* 遥控器异常值处理，函数直接返回 */
         if ((abs(rc_obj[NOW].ch1) > RC_MAX_VALUE) || \
         (abs(rc_obj[NOW].ch2) > RC_MAX_VALUE) || \
@@ -103,62 +103,62 @@ static void rc_lost_callback(void *paramete)
 static void rc_doub_dma_init(uint8_t *rx1_buf, uint8_t *rx2_buf, uint16_t dma_buf_num)
 {
     //使能DMA串口接收
-    SET_BIT(huart3.Instance->CR3, USART_CR3_DMAR);
+    SET_BIT(huart1.Instance->CR3, USART_CR3_DMAR);
 
     //使能空闲中断
-    __HAL_UART_ENABLE_IT(&huart3, UART_IT_IDLE);
+    __HAL_UART_ENABLE_IT(&huart1, UART_IT_IDLE);
 
     //失效DMA
-    __HAL_DMA_DISABLE(&hdma_usart3_rx);
-    while(hdma_usart3_rx.Instance->CR & DMA_SxCR_EN)
+    __HAL_DMA_DISABLE(&hdma_usart1_rx);
+    while(hdma_usart1_rx.Instance->CR & DMA_SxCR_EN)
     {
-        __HAL_DMA_DISABLE(&hdma_usart3_rx);
+        __HAL_DMA_DISABLE(&hdma_usart1_rx);
     }
 
-    hdma_usart3_rx.Instance->PAR = (uint32_t) & (USART3->DR);
+    hdma_usart1_rx.Instance->PAR = (uint32_t) & (USART1->DR);
     //内存缓冲区1
-    hdma_usart3_rx.Instance->M0AR = (uint32_t)(rx1_buf);
+    hdma_usart1_rx.Instance->M0AR = (uint32_t)(rx1_buf);
     //内存缓冲区2
-    hdma_usart3_rx.Instance->M1AR = (uint32_t)(rx2_buf);
+    hdma_usart1_rx.Instance->M1AR = (uint32_t)(rx2_buf);
     //数据长度
-    hdma_usart3_rx.Instance->NDTR = dma_buf_num;
+    hdma_usart1_rx.Instance->NDTR = dma_buf_num;
     //使能双缓冲区
-    SET_BIT(hdma_usart3_rx.Instance->CR, DMA_SxCR_DBM);
+    SET_BIT(hdma_usart1_rx.Instance->CR, DMA_SxCR_DBM);
 
     //使能DMA
-    __HAL_DMA_ENABLE(&hdma_usart3_rx);
+    __HAL_DMA_ENABLE(&hdma_usart1_rx);
 }
 
-void USART3_IRQHandler(void)
+void USART1_IRQHandler(void)
 {
-    if(huart3.Instance->SR & UART_FLAG_RXNE)
+    if(huart1.Instance->SR & UART_FLAG_RXNE)
     {
-        __HAL_UART_CLEAR_PEFLAG(&huart3);
+        __HAL_UART_CLEAR_PEFLAG(&huart1);
     }
-    else if(USART3->SR & UART_FLAG_IDLE)
+    else if(USART1->SR & UART_FLAG_IDLE)
     {
         static uint16_t this_time_rx_len = 0;
 
-        __HAL_UART_CLEAR_PEFLAG(&huart3);
+        __HAL_UART_CLEAR_PEFLAG(&huart1);
 
-        if ((hdma_usart3_rx.Instance->CR & DMA_SxCR_CT) == RESET)
+        if ((hdma_usart1_rx.Instance->CR & DMA_SxCR_CT) == RESET)
         {
             /* Current memory buffer used is Memory 0 */
             //失效DMA
-            __HAL_DMA_DISABLE(&hdma_usart3_rx);
+            __HAL_DMA_DISABLE(&hdma_usart1_rx);
 
             //get receive data length, length = set_data_length - remain_length
             //获取接收数据长度,长度 = 设定长度 - 剩余长度
-            this_time_rx_len = SBUS_RX_BUF_NUM - hdma_usart3_rx.Instance->NDTR;
+            this_time_rx_len = SBUS_RX_BUF_NUM - hdma_usart1_rx.Instance->NDTR;
 
             //重新设定数据长度
-            hdma_usart3_rx.Instance->NDTR = SBUS_RX_BUF_NUM;
+            hdma_usart1_rx.Instance->NDTR = SBUS_RX_BUF_NUM;
 
             //设定缓冲区1
-            hdma_usart3_rx.Instance->CR |= DMA_SxCR_CT;
+            hdma_usart1_rx.Instance->CR |= DMA_SxCR_CT;
 
             //使能DMA
-            __HAL_DMA_ENABLE(&hdma_usart3_rx);
+            __HAL_DMA_ENABLE(&hdma_usart1_rx);
 
             if(this_time_rx_len == SBUS_FRAME_SIZE)
             {
@@ -171,20 +171,20 @@ void USART3_IRQHandler(void)
         {
             /* Current memory buffer used is Memory 1 */
             //失效DMA
-            __HAL_DMA_DISABLE(&hdma_usart3_rx);
+            __HAL_DMA_DISABLE(&hdma_usart1_rx);
 
             //get receive data length, length = set_data_length - remain_length
             //获取接收数据长度,长度 = 设定长度 - 剩余长度
-            this_time_rx_len = SBUS_RX_BUF_NUM - hdma_usart3_rx.Instance->NDTR;
+            this_time_rx_len = SBUS_RX_BUF_NUM - hdma_usart1_rx.Instance->NDTR;
 
             //重新设定数据长度
-            hdma_usart3_rx.Instance->NDTR = SBUS_RX_BUF_NUM;
+            hdma_usart1_rx.Instance->NDTR = SBUS_RX_BUF_NUM;
 
             //设定缓冲区0
             DMA1_Stream1->CR &= ~(DMA_SxCR_CT);
 
             //使能DMA
-            __HAL_DMA_ENABLE(&hdma_usart3_rx);
+            __HAL_DMA_ENABLE(&hdma_usart1_rx);
 
             if(this_time_rx_len == SBUS_FRAME_SIZE)
             {
@@ -209,15 +209,15 @@ rc_obj_t *sbus_rc_init(void)
     HAL_NVIC_SetPriority(DMA1_Stream1_IRQn, 0, 0);
     HAL_NVIC_EnableIRQ(DMA1_Stream1_IRQn);
 
-    huart3.Instance = USART3;
-    huart3.Init.BaudRate = 100000;
-    huart3.Init.WordLength = UART_WORDLENGTH_9B;
-    huart3.Init.StopBits = UART_STOPBITS_2;
-    huart3.Init.Parity = UART_PARITY_EVEN;
-    huart3.Init.Mode = UART_MODE_TX_RX;
-    huart3.Init.HwFlowCtl = UART_HWCONTROL_NONE;
-    huart3.Init.OverSampling = UART_OVERSAMPLING_16;
-    HAL_UART_Init(&huart3);
+    huart1.Instance = USART1;
+    huart1.Init.BaudRate = 100000;
+    huart1.Init.WordLength = UART_WORDLENGTH_9B;
+    huart1.Init.StopBits = UART_STOPBITS_2;
+    huart1.Init.Parity = UART_PARITY_EVEN;
+    huart1.Init.Mode = UART_MODE_TX_RX;
+    huart1.Init.HwFlowCtl = UART_HWCONTROL_NONE;
+    huart1.Init.OverSampling = UART_OVERSAMPLING_16;
+    HAL_UART_Init(&huart1);
 
     rc_doub_dma_init(sbus_rx_buf[0], sbus_rx_buf[1], SBUS_RX_BUF_NUM);
 

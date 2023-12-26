@@ -68,7 +68,6 @@ INCLUDE_DIRECTORIES(
 	src/modules/imu
 	src/modules/rc/sbus
 	src/task
-	src/task/example
 	src/task/motor
 	src/task/cmd
 	src/task/chassis
@@ -204,20 +203,19 @@ SET(PROJECT_SOURCES
 	src/algorithm/QuaternionEKF/QuaternionEKF.c
 	src/algorithm/ramp/ramp.c
 	src/algorithm/kalman_filter/kalman_filter.c
-	src/modules/rc/sbus/rc_sbus.c
 	src/modules/msg/drv_msg.c
 	src/modules/usr_callback.c
+	src/modules/rc/sbus/rc_sbus.c
 	src/modules/mag/ist8310/ist8310.c
 	src/modules/dwt/drv_dwt.c
 	src/modules/motor/DJI_motor/dji_motor.c
-	src/task/chassis/chassis_task.c
-	src/task/example/example_task.c
 	src/task/gimbal/gimbal_task.c
-	src/task/transmission/transmission_task.c
-	src/task/shoot/shoot_task.c
 	src/task/robot.c
-	src/task/motor/motor_task.c
+	src/task/transmission/transmission_task.c
+	src/task/chassis/chassis_task.c
+	src/task/shoot/shoot_task.c
 	src/task/cmd/cmd_task.c
+	src/task/motor/motor_task.c
 	rt-thread/components/utilities/ulog/ulog.c
 	rt-thread/components/utilities/ulog/backend/console_be.c
 )

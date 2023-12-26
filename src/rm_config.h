@@ -27,7 +27,7 @@
 #define PWM_COVER_CH     2
 
 /* 遥控器所挂载的 usart 设备名称 */
-#define USART_RC       "uart3"
+#define USART_RC       "uart1"
 
 /* ---------------------------------- 遥控器相关 --------------------------------- */
 #define RC_MAX_VALUE      784.0f  /* 遥控器通道最大值 */
@@ -55,11 +55,11 @@
 
 /* ---------------------------------- 底盘相关 ---------------------------------- */
 /* 底盘轮距(mm) */
-#define WHEELTRACK        300
+#define WHEELTRACK        397
 /* 底盘轴距(mm) */
-#define WHEELBASE         388
+#define WHEELBASE         380
 /* 底盘轮子周长(mm) */
-#define WHEEL_PERIMETER   481
+#define WHEEL_PERIMETER   478
 
 #define LENGTH_A 278 //底盘长的一半(mm)
 #define LENGTH_B 294 //底盘宽的一半(mm)

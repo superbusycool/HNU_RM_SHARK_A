@@ -506,16 +506,16 @@ static void uart_isr(struct rt_serial_device *serial)
 }
 
 #if defined(BSP_USING_UART1)
-void USART1_IRQHandler(void)
+/*void USART1_IRQHandler(void)
 {
-    /* enter interrupt */
+    *//* enter interrupt *//*
     rt_interrupt_enter();
 
     uart_isr(&(uart_obj[UART1_INDEX].serial));
 
-    /* leave interrupt */
+    *//* leave interrupt *//*
     rt_interrupt_leave();
-}
+}*/
 #if defined(RT_SERIAL_USING_DMA) && defined(BSP_UART1_RX_USING_DMA)
 void UART1_DMA_RX_IRQHandler(void)
 {

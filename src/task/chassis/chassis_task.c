@@ -157,28 +157,28 @@ static void chassis_sub_pull(void)
 static rt_int16_t motor_control_0(dji_motor_measure_t measure)
 {
     static rt_int16_t set = 0;
-    set = pid_calculate(chassis_controller[0].speed_pid, measure.speed_rpm, 500);
+    set = pid_calculate(chassis_controller[0].speed_pid, measure.speed_rpm, motor_ref[0]);
     return set;
 }
 
 static rt_int16_t motor_control_1(dji_motor_measure_t measure)
 {
     static rt_int16_t set = 0;
-    set = pid_calculate(chassis_controller[1].speed_pid, measure.speed_rpm, 1000);
+    set = pid_calculate(chassis_controller[1].speed_pid, measure.speed_rpm, motor_ref[1]);
     return set;
 }
 
 static rt_int16_t motor_control_2(dji_motor_measure_t measure)
 {
     static rt_int16_t set = 0;
-    set = pid_calculate(chassis_controller[2].speed_pid, measure.speed_rpm, 1500);
+    set = pid_calculate(chassis_controller[2].speed_pid, measure.speed_rpm, motor_ref[2]);
     return set;
 }
 
 static rt_int16_t motor_control_3(dji_motor_measure_t measure)
 {
     static rt_int16_t set = 0;
-    set = pid_calculate(chassis_controller[3].speed_pid, measure.speed_rpm, 2000);
+    set = pid_calculate(chassis_controller[3].speed_pid, measure.speed_rpm, motor_ref[3]);
     return set;
 }
 
