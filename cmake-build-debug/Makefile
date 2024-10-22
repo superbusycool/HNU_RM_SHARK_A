@@ -56,10 +56,10 @@ RM = "C:\Program Files\JetBrains\CLion 2023.2.2\bin\cmake\win\x64\bin\cmake.exe"
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = D:\HNU_RM_CodeStorage\HMU_Shark_A_Try3\HNU_RM_SHARK_A
+CMAKE_SOURCE_DIR = D:\HNU_RM_CodeStorage\HNU_A_Try3_Test\HNU_RM_SHARK_A
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = D:\HNU_RM_CodeStorage\HMU_Shark_A_Try3\HNU_RM_SHARK_A\cmake-build-debug
+CMAKE_BINARY_DIR = D:\HNU_RM_CodeStorage\HNU_A_Try3_Test\HNU_RM_SHARK_A\cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -86,9 +86,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start D:\HNU_RM_CodeStorage\HMU_Shark_A_Try3\HNU_RM_SHARK_A\cmake-build-debug\CMakeFiles D:\HNU_RM_CodeStorage\HMU_Shark_A_Try3\HNU_RM_SHARK_A\cmake-build-debug\\CMakeFiles\progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start D:\HNU_RM_CodeStorage\HNU_A_Try3_Test\HNU_RM_SHARK_A\cmake-build-debug\CMakeFiles D:\HNU_RM_CodeStorage\HNU_A_Try3_Test\HNU_RM_SHARK_A\cmake-build-debug\\CMakeFiles\progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start D:\HNU_RM_CodeStorage\HMU_Shark_A_Try3\HNU_RM_SHARK_A\cmake-build-debug\CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start D:\HNU_RM_CodeStorage\HNU_A_Try3_Test\HNU_RM_SHARK_A\cmake-build-debug\CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -1455,6 +1455,30 @@ rt-thread/components/drivers/hwcrypto/hwcrypto.s: rt-thread/components/drivers/h
 rt-thread/components/drivers/hwcrypto/hwcrypto.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\rtthread.elf.dir\build.make CMakeFiles/rtthread.elf.dir/rt-thread/components/drivers/hwcrypto/hwcrypto.c.s
 .PHONY : rt-thread/components/drivers/hwcrypto/hwcrypto.c.s
+
+rt-thread/components/drivers/hwtimer/hwtimer.obj: rt-thread/components/drivers/hwtimer/hwtimer.c.obj
+.PHONY : rt-thread/components/drivers/hwtimer/hwtimer.obj
+
+# target to build an object file
+rt-thread/components/drivers/hwtimer/hwtimer.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\rtthread.elf.dir\build.make CMakeFiles/rtthread.elf.dir/rt-thread/components/drivers/hwtimer/hwtimer.c.obj
+.PHONY : rt-thread/components/drivers/hwtimer/hwtimer.c.obj
+
+rt-thread/components/drivers/hwtimer/hwtimer.i: rt-thread/components/drivers/hwtimer/hwtimer.c.i
+.PHONY : rt-thread/components/drivers/hwtimer/hwtimer.i
+
+# target to preprocess a source file
+rt-thread/components/drivers/hwtimer/hwtimer.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\rtthread.elf.dir\build.make CMakeFiles/rtthread.elf.dir/rt-thread/components/drivers/hwtimer/hwtimer.c.i
+.PHONY : rt-thread/components/drivers/hwtimer/hwtimer.c.i
+
+rt-thread/components/drivers/hwtimer/hwtimer.s: rt-thread/components/drivers/hwtimer/hwtimer.c.s
+.PHONY : rt-thread/components/drivers/hwtimer/hwtimer.s
+
+# target to generate assembly for a file
+rt-thread/components/drivers/hwtimer/hwtimer.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\rtthread.elf.dir\build.make CMakeFiles/rtthread.elf.dir/rt-thread/components/drivers/hwtimer/hwtimer.c.s
+.PHONY : rt-thread/components/drivers/hwtimer/hwtimer.c.s
 
 rt-thread/components/drivers/i2c/i2c-bit-ops.obj: rt-thread/components/drivers/i2c/i2c-bit-ops.c.obj
 .PHONY : rt-thread/components/drivers/i2c/i2c-bit-ops.obj
@@ -3048,54 +3072,6 @@ src/modules/rc/dbus/rc_dbus.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\rtthread.elf.dir\build.make CMakeFiles/rtthread.elf.dir/src/modules/rc/dbus/rc_dbus.c.s
 .PHONY : src/modules/rc/dbus/rc_dbus.c.s
 
-src/modules/rc/keyboard/keyboard.obj: src/modules/rc/keyboard/keyboard.c.obj
-.PHONY : src/modules/rc/keyboard/keyboard.obj
-
-# target to build an object file
-src/modules/rc/keyboard/keyboard.c.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\rtthread.elf.dir\build.make CMakeFiles/rtthread.elf.dir/src/modules/rc/keyboard/keyboard.c.obj
-.PHONY : src/modules/rc/keyboard/keyboard.c.obj
-
-src/modules/rc/keyboard/keyboard.i: src/modules/rc/keyboard/keyboard.c.i
-.PHONY : src/modules/rc/keyboard/keyboard.i
-
-# target to preprocess a source file
-src/modules/rc/keyboard/keyboard.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\rtthread.elf.dir\build.make CMakeFiles/rtthread.elf.dir/src/modules/rc/keyboard/keyboard.c.i
-.PHONY : src/modules/rc/keyboard/keyboard.c.i
-
-src/modules/rc/keyboard/keyboard.s: src/modules/rc/keyboard/keyboard.c.s
-.PHONY : src/modules/rc/keyboard/keyboard.s
-
-# target to generate assembly for a file
-src/modules/rc/keyboard/keyboard.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\rtthread.elf.dir\build.make CMakeFiles/rtthread.elf.dir/src/modules/rc/keyboard/keyboard.c.s
-.PHONY : src/modules/rc/keyboard/keyboard.c.s
-
-src/modules/rc/sbus/rc_sbus.obj: src/modules/rc/sbus/rc_sbus.c.obj
-.PHONY : src/modules/rc/sbus/rc_sbus.obj
-
-# target to build an object file
-src/modules/rc/sbus/rc_sbus.c.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\rtthread.elf.dir\build.make CMakeFiles/rtthread.elf.dir/src/modules/rc/sbus/rc_sbus.c.obj
-.PHONY : src/modules/rc/sbus/rc_sbus.c.obj
-
-src/modules/rc/sbus/rc_sbus.i: src/modules/rc/sbus/rc_sbus.c.i
-.PHONY : src/modules/rc/sbus/rc_sbus.i
-
-# target to preprocess a source file
-src/modules/rc/sbus/rc_sbus.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\rtthread.elf.dir\build.make CMakeFiles/rtthread.elf.dir/src/modules/rc/sbus/rc_sbus.c.i
-.PHONY : src/modules/rc/sbus/rc_sbus.c.i
-
-src/modules/rc/sbus/rc_sbus.s: src/modules/rc/sbus/rc_sbus.c.s
-.PHONY : src/modules/rc/sbus/rc_sbus.s
-
-# target to generate assembly for a file
-src/modules/rc/sbus/rc_sbus.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\rtthread.elf.dir\build.make CMakeFiles/rtthread.elf.dir/src/modules/rc/sbus/rc_sbus.c.s
-.PHONY : src/modules/rc/sbus/rc_sbus.c.s
-
 src/modules/referee/Referee.obj: src/modules/referee/Referee.c.obj
 .PHONY : src/modules/referee/Referee.obj
 
@@ -3120,6 +3096,30 @@ src/modules/referee/Referee.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\rtthread.elf.dir\build.make CMakeFiles/rtthread.elf.dir/src/modules/referee/Referee.c.s
 .PHONY : src/modules/referee/Referee.c.s
 
+src/modules/referee/bsp_referee_UI/BSP_CRC.obj: src/modules/referee/bsp_referee_UI/BSP_CRC.c.obj
+.PHONY : src/modules/referee/bsp_referee_UI/BSP_CRC.obj
+
+# target to build an object file
+src/modules/referee/bsp_referee_UI/BSP_CRC.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\rtthread.elf.dir\build.make CMakeFiles/rtthread.elf.dir/src/modules/referee/bsp_referee_UI/BSP_CRC.c.obj
+.PHONY : src/modules/referee/bsp_referee_UI/BSP_CRC.c.obj
+
+src/modules/referee/bsp_referee_UI/BSP_CRC.i: src/modules/referee/bsp_referee_UI/BSP_CRC.c.i
+.PHONY : src/modules/referee/bsp_referee_UI/BSP_CRC.i
+
+# target to preprocess a source file
+src/modules/referee/bsp_referee_UI/BSP_CRC.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\rtthread.elf.dir\build.make CMakeFiles/rtthread.elf.dir/src/modules/referee/bsp_referee_UI/BSP_CRC.c.i
+.PHONY : src/modules/referee/bsp_referee_UI/BSP_CRC.c.i
+
+src/modules/referee/bsp_referee_UI/BSP_CRC.s: src/modules/referee/bsp_referee_UI/BSP_CRC.c.s
+.PHONY : src/modules/referee/bsp_referee_UI/BSP_CRC.s
+
+# target to generate assembly for a file
+src/modules/referee/bsp_referee_UI/BSP_CRC.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\rtthread.elf.dir\build.make CMakeFiles/rtthread.elf.dir/src/modules/referee/bsp_referee_UI/BSP_CRC.c.s
+.PHONY : src/modules/referee/bsp_referee_UI/BSP_CRC.c.s
+
 src/modules/referee/bsp_referee_UI/Referee_system.obj: src/modules/referee/bsp_referee_UI/Referee_system.c.obj
 .PHONY : src/modules/referee/bsp_referee_UI/Referee_system.obj
 
@@ -3143,6 +3143,30 @@ src/modules/referee/bsp_referee_UI/Referee_system.s: src/modules/referee/bsp_ref
 src/modules/referee/bsp_referee_UI/Referee_system.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\rtthread.elf.dir\build.make CMakeFiles/rtthread.elf.dir/src/modules/referee/bsp_referee_UI/Referee_system.c.s
 .PHONY : src/modules/referee/bsp_referee_UI/Referee_system.c.s
+
+src/modules/referee/bsp_referee_UI/UI_print.obj: src/modules/referee/bsp_referee_UI/UI_print.c.obj
+.PHONY : src/modules/referee/bsp_referee_UI/UI_print.obj
+
+# target to build an object file
+src/modules/referee/bsp_referee_UI/UI_print.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\rtthread.elf.dir\build.make CMakeFiles/rtthread.elf.dir/src/modules/referee/bsp_referee_UI/UI_print.c.obj
+.PHONY : src/modules/referee/bsp_referee_UI/UI_print.c.obj
+
+src/modules/referee/bsp_referee_UI/UI_print.i: src/modules/referee/bsp_referee_UI/UI_print.c.i
+.PHONY : src/modules/referee/bsp_referee_UI/UI_print.i
+
+# target to preprocess a source file
+src/modules/referee/bsp_referee_UI/UI_print.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\rtthread.elf.dir\build.make CMakeFiles/rtthread.elf.dir/src/modules/referee/bsp_referee_UI/UI_print.c.i
+.PHONY : src/modules/referee/bsp_referee_UI/UI_print.c.i
+
+src/modules/referee/bsp_referee_UI/UI_print.s: src/modules/referee/bsp_referee_UI/UI_print.c.s
+.PHONY : src/modules/referee/bsp_referee_UI/UI_print.s
+
+# target to generate assembly for a file
+src/modules/referee/bsp_referee_UI/UI_print.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\rtthread.elf.dir\build.make CMakeFiles/rtthread.elf.dir/src/modules/referee/bsp_referee_UI/UI_print.c.s
+.PHONY : src/modules/referee/bsp_referee_UI/UI_print.c.s
 
 src/modules/referee/bsp_referee_UI/fifo.obj: src/modules/referee/bsp_referee_UI/fifo.c.obj
 .PHONY : src/modules/referee/bsp_referee_UI/fifo.obj
@@ -3311,30 +3335,6 @@ src/task/motor/motor_task.s: src/task/motor/motor_task.c.s
 src/task/motor/motor_task.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\rtthread.elf.dir\build.make CMakeFiles/rtthread.elf.dir/src/task/motor/motor_task.c.s
 .PHONY : src/task/motor/motor_task.c.s
-
-src/task/referee/referee_task.obj: src/task/referee/referee_task.c.obj
-.PHONY : src/task/referee/referee_task.obj
-
-# target to build an object file
-src/task/referee/referee_task.c.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\rtthread.elf.dir\build.make CMakeFiles/rtthread.elf.dir/src/task/referee/referee_task.c.obj
-.PHONY : src/task/referee/referee_task.c.obj
-
-src/task/referee/referee_task.i: src/task/referee/referee_task.c.i
-.PHONY : src/task/referee/referee_task.i
-
-# target to preprocess a source file
-src/task/referee/referee_task.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\rtthread.elf.dir\build.make CMakeFiles/rtthread.elf.dir/src/task/referee/referee_task.c.i
-.PHONY : src/task/referee/referee_task.c.i
-
-src/task/referee/referee_task.s: src/task/referee/referee_task.c.s
-.PHONY : src/task/referee/referee_task.s
-
-# target to generate assembly for a file
-src/task/referee/referee_task.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\rtthread.elf.dir\build.make CMakeFiles/rtthread.elf.dir/src/task/referee/referee_task.c.s
-.PHONY : src/task/referee/referee_task.c.s
 
 src/task/robot.obj: src/task/robot.c.obj
 .PHONY : src/task/robot.obj
@@ -3583,6 +3583,9 @@ help:
 	@echo ... rt-thread/components/drivers/hwcrypto/hwcrypto.obj
 	@echo ... rt-thread/components/drivers/hwcrypto/hwcrypto.i
 	@echo ... rt-thread/components/drivers/hwcrypto/hwcrypto.s
+	@echo ... rt-thread/components/drivers/hwtimer/hwtimer.obj
+	@echo ... rt-thread/components/drivers/hwtimer/hwtimer.i
+	@echo ... rt-thread/components/drivers/hwtimer/hwtimer.s
 	@echo ... rt-thread/components/drivers/i2c/i2c-bit-ops.obj
 	@echo ... rt-thread/components/drivers/i2c/i2c-bit-ops.i
 	@echo ... rt-thread/components/drivers/i2c/i2c-bit-ops.s
@@ -3782,18 +3785,18 @@ help:
 	@echo ... src/modules/rc/dbus/rc_dbus.obj
 	@echo ... src/modules/rc/dbus/rc_dbus.i
 	@echo ... src/modules/rc/dbus/rc_dbus.s
-	@echo ... src/modules/rc/keyboard/keyboard.obj
-	@echo ... src/modules/rc/keyboard/keyboard.i
-	@echo ... src/modules/rc/keyboard/keyboard.s
-	@echo ... src/modules/rc/sbus/rc_sbus.obj
-	@echo ... src/modules/rc/sbus/rc_sbus.i
-	@echo ... src/modules/rc/sbus/rc_sbus.s
 	@echo ... src/modules/referee/Referee.obj
 	@echo ... src/modules/referee/Referee.i
 	@echo ... src/modules/referee/Referee.s
+	@echo ... src/modules/referee/bsp_referee_UI/BSP_CRC.obj
+	@echo ... src/modules/referee/bsp_referee_UI/BSP_CRC.i
+	@echo ... src/modules/referee/bsp_referee_UI/BSP_CRC.s
 	@echo ... src/modules/referee/bsp_referee_UI/Referee_system.obj
 	@echo ... src/modules/referee/bsp_referee_UI/Referee_system.i
 	@echo ... src/modules/referee/bsp_referee_UI/Referee_system.s
+	@echo ... src/modules/referee/bsp_referee_UI/UI_print.obj
+	@echo ... src/modules/referee/bsp_referee_UI/UI_print.i
+	@echo ... src/modules/referee/bsp_referee_UI/UI_print.s
 	@echo ... src/modules/referee/bsp_referee_UI/fifo.obj
 	@echo ... src/modules/referee/bsp_referee_UI/fifo.i
 	@echo ... src/modules/referee/bsp_referee_UI/fifo.s
@@ -3815,9 +3818,6 @@ help:
 	@echo ... src/task/motor/motor_task.obj
 	@echo ... src/task/motor/motor_task.i
 	@echo ... src/task/motor/motor_task.s
-	@echo ... src/task/referee/referee_task.obj
-	@echo ... src/task/referee/referee_task.i
-	@echo ... src/task/referee/referee_task.s
 	@echo ... src/task/robot.obj
 	@echo ... src/task/robot.i
 	@echo ... src/task/robot.s
