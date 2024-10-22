@@ -16,11 +16,11 @@
 #define I2C_MAG        "i2c1"    //"Notice: PA8 --> 8; PC9 --> 41"
 
 /* 陀螺仪所挂载的 SPI 设备名称及 CS 引脚 */
-#define SPI_GYRO       "spi1"
-#define SPI_GYRO_CS    16
+#define SPI_GYRO       "spi5"
+#define SPI_GYRO_CS    15
 /* 加速度计所挂载的 SPI 设备名称及 CS 引脚 */
-#define SPI_ACC        "spi1"
-#define SPI_ACC_CS     4
+#define SPI_ACC        "spi5"
+#define SPI_ACC_CS     16
 
 /* 弹仓盖舵机所挂载的 PWM 设备及通道号 */
 #define PWM_COVER        "pwm1"
@@ -31,9 +31,9 @@
 
 /* ---------------------------------- 遥控器相关 --------------------------------- */
 #define RC_MAX_VALUE      784.0f  /* 遥控器通道最大值 */
-
+#define RC_DBUS_MAX_VALUE      660.0f
 #define RC_RATIO          0.0009f
-
+#define KB_RATIO          0.010f
 /* 遥控器模式下的底盘最大速度限制 */
 /* 底盘平移速度 */
 #define CHASSIS_RC_MOVE_RATIO_X 1.0f
@@ -63,7 +63,7 @@
 
 #define LENGTH_A 278 //底盘长的一半(mm)
 #define LENGTH_B 294 //底盘宽的一半(mm)
-
+#define LENGTH_RADIUS 230 //底盘的半径(mm)[老烧饼(全向轮)的参数]
 /******** 底盘电机使用3508 *******/
 /* 3508底盘电机减速比 */
 #define CHASSIS_DECELE_RATIO (1.0f/19.0f)

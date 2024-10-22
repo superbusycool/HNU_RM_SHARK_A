@@ -23,9 +23,9 @@
 extern "C" {
 #endif
 
-#ifdef BSP_USING_BMI088
-#include "bmi088.h"
-#endif /* BSP_USING_BMI088 */
+#ifdef BSP_USING_MPU6500
+#include "A6500.h"
+#endif /* BSP_USING_MPU6500 */
 
 /* ---------------------------------- GYRO ---------------------------------- */
 /* gyro range type */
@@ -35,7 +35,7 @@ extern "C" {
 #define GYRO_RANGE_2000DPS 2000
 
 /* gyro device bus type */
-#define GYRO_SPI_BUS_TYPE 1
+#define GYRO_SPI_BUS_TYPE 5
 #define GYRO_I2C_BUS_TYPE 2
 
 /* default config for accel sensor */
@@ -61,7 +61,7 @@ struct gyro_configure {
 #define ACCEL_RANGE_16G 16
 
 /* accel device bus type */
-#define ACCEL_SPI_BUS_TYPE 1
+#define ACCEL_SPI_BUS_TYPE 5
 #define ACCEL_I2C_BUS_TYPE 2
 
 /* default config for accel sensor */

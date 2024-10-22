@@ -34,6 +34,10 @@ static pid_config_t imu_temp_config = {
         .MaxOut = 250000,
 };
 
+#define X 0
+#define Y 1
+#define Z 2
+
 static rt_err_t temp_pwm_init(rt_uint32_t period, rt_uint32_t pulse);
 /* ----------------------------- IMU_TEMPRETURE ----------------------------- */
 

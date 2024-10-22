@@ -12,6 +12,14 @@ if GetDepend(['BSP_USING_DJI_MOTOR']):
     src += [cwd + '/motor/DJI_motor/dji_motor.c']
     path += [cwd + '/motor/DJI_motor']
 
+if GetDepend(['BSP_USING_HT_MOTOR']):
+    src += [cwd + '/motor/HT_motor/ht04.c']
+    path += [cwd + '/motor/HT_motor']
+
+if GetDepend(['BSP_USING_LK_MOTOR']):
+    src += [cwd + '/motor/LK_motor/lk_motor.c']
+    path += [cwd + '/motor/LK_motor']
+
 if GetDepend(['BSP_USING_DWT']):
     src += [cwd + '/dwt/drv_dwt.c']
     path += [cwd + '/dwt']
@@ -30,13 +38,32 @@ if GetDepend(['BSP_USING_IST8310']):
 if GetDepend(['BSP_USING_IMU']):
     path += [cwd + '/imu']
 
-if GetDepend(['BSP_USING_BMI088']):
-    src += [cwd + '/imu/bmi088/bmi088.c']
-    path += [cwd + '/imu/bmi088']
-    
+if GetDepend(['BSP_USING_MPU6500']):
+    src += [cwd + '/imu/A6500/A6500.c']
+    path += [cwd + '/imu/A6500']
+
+if GetDepend(['BSP_USING_RC_DBUS']):
+    src += Glob(cwd + '/rc/dbus/*.c')
+    path += [cwd + '/rc/dbus']
+
 if GetDepend(['BSP_USING_RC_SBUS']):
     src += Glob(cwd + '/rc/sbus/*.c')
     path += [cwd + '/rc/sbus']
+
+if GetDepend(['BSP_USING_RC_KEYBOARD']):
+    src += Glob(cwd + '/rc/keyboard/*.c')
+    path += [cwd + '/rc/keyboard']
+
+if GetDepend(['BSP_USING_REFEREE']):
+    src += Glob(cwd + '/referee/*.c')
+    path += [cwd + '/referee']
+    src += Glob(cwd + '/referee/bsp_referee_UI/*.c')
+    path += [cwd + '/referee/bsp_referee_UI']
+
+if GetDepend(['BSP_USING_LEG']):
+    src += Glob(cwd + '/leg/*.c')
+    path += [cwd + '/leg']
+
 
 src  += [cwd + '/usr_callback.c']
 

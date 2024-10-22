@@ -18,11 +18,12 @@ void shoot_task_entry(void* argument);
 typedef enum
 {
     /*发射模式*/
-  SHOOT_STOP=0        ,     //射击关闭
-  SHOOT_ONE=1         ,     //单发模式
-  SHOOT_THREE=2       ,     //三连发模式
-  SHOOT_COUNTINUE=3   ,     //自动射击
-
+    SHOOT_STOP=0        ,     //射击关闭
+    SHOOT_ONE=1         ,     //单发模式
+    SHOOT_THREE=2       ,     //三连发模式
+    SHOOT_COUNTINUE=3   ,     //自动射击
+    SHOOT_REVERSE=4     ,     //堵弹反转
+    SHOOT_AUTO=5        ,     //自动发射模式
 } shoot_mode_e;
 /**
  * @brief 扳机模式
@@ -50,8 +51,8 @@ typedef enum
 //TODO:具体回馈设置待讨论
 typedef enum
 {
-  SHOOT_OK=1,   //发射正常
-  SHOOT_ERR=0,  //发射异常
+    SHOOT_OK=1,   //发射正常
+    SHOOT_ERR=0,  //发射异常
 } shoot_back_e;
 
 #endif //RTTHREAD_SHOOT_TASK_H
