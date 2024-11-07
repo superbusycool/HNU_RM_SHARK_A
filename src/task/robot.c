@@ -43,15 +43,15 @@ rt_thread_t referee_thread_handle;
  */
 int robot_task_init(void)
 {
-#ifdef BSP_USING_EXAMPLE_TASK
-    /* 创建线程，名称是 example，入口是 example_thread_handle */
-    example_thread_handle = rt_thread_create("example",
-                                             example_thread_entry, RT_NULL,
-                                             1024,15, 10);
-    /* 如果获得线程控制块，启动这个线程 */
-    if (example_thread_handle != RT_NULL)
-        rt_thread_startup(example_thread_handle);
-#endif /* BSP_USING_EXAMPLE_TASK */
+//#ifdef BSP_USING_EXAMPLE_TASK
+//    /* 创建线程，名称是 example，入口是 example_thread_handle */
+//    example_thread_handle = rt_thread_create("example",
+//                                             example_thread_entry, RT_NULL,
+//                                             1024,15, 10);
+//    /* 如果获得线程控制块，启动这个线程 */
+//    if (example_thread_handle != RT_NULL)
+//        rt_thread_startup(example_thread_handle);
+//#endif /* BSP_USING_EXAMPLE_TASK */
 
 #ifdef BSP_USING_INS_TASK
     /* 创建线程，名称是 ins ，入口是 ins_thread_entry */
@@ -62,76 +62,76 @@ int robot_task_init(void)
     if (ins_thread_handle != RT_NULL)
         rt_thread_startup(ins_thread_handle);
 #endif /* BSP_USING_INS_TASK */
-
-#ifdef BSP_USING_MOTOR_TASK
-    /* 创建线程，名称是 motor ，入口是 motor_thread_entry */
-    motor_thread_handle = rt_thread_create("motor",
-                                           motor_thread_entry, RT_NULL,
-                                           2048,15, 10);
-    /* 如果获得线程控制块，启动这个线程 */
-    if (motor_thread_handle != RT_NULL)
-        rt_thread_startup(motor_thread_handle);
-#endif /* BSP_USING_MOTOR_TASK */
-
-#ifdef BSP_USING_CMD_TASK
-    /* 创建线程，名称是 cmd ，入口是 cmd_thread_entry */
-    cmd_thread_handle = rt_thread_create("cmd",
-                                         cmd_thread_entry, RT_NULL,
-                                         1024,15, 10);
-    /* 如果获得线程控制块，启动这个线程 */
-    if (cmd_thread_handle != RT_NULL)
-        rt_thread_startup(cmd_thread_handle);
-#endif /* BSP_USING_CMD_TASK */
-
-#ifdef BSP_USING_CHASSIS_TASK
-    /* 创建线程，名称是 chassis ，入口是 chassis_thread_entry */
-    chassis_thread_handle = rt_thread_create("chassis",
-                                             chassis_thread_entry, RT_NULL,
-                                             1024,15, 10);
-    /* 如果获得线程控制块，启动这个线程 */
-    if (chassis_thread_handle != RT_NULL)
-        rt_thread_startup(chassis_thread_handle);
-#endif /* BSP_USING_CHASSIS_TASK */
-
-#ifdef BSP_USING_GIMBAL_TASK
-    /* 创建线程，名称是 gimbal ，入口是 gimbal_thread_entry */
-    gimbal_thread_handle = rt_thread_create("gimbal",
-                                            gimbal_thread_entry, RT_NULL,
-                                            1024,15, 10);
-    /* 如果获得线程控制块，启动这个线程 */
-    if (gimbal_thread_handle != RT_NULL)
-        rt_thread_startup(gimbal_thread_handle);
-#endif /* BSP_USING_GIMBAL_TASK */
-
-#ifdef BSP_USING_TRANSMISSION_TASK
-    /* 创建线程，名称是  transmission ，入口是  transmission_task_entry */
-    transmission_thread_handle = rt_thread_create("transmission",
-                                                  transmission_task_entry, RT_NULL,
-                                                  768,15, 10);
-    /* 如果获得线程控制块，启动这个线程 */
-    if ( transmission_thread_handle != RT_NULL)
-        rt_thread_startup(transmission_thread_handle);
-#endif /*BSP_USING_TRANSMISSION_TASK */
-
-#ifdef BSP_USING_SHOOT_TASK
-    /* 创建线程，名称是  shoot ，入口是  shoot_task_entry */
-    shoot_thread_handle = rt_thread_create("shoot",
-                                           shoot_task_entry, RT_NULL,
-                                           768,15, 10);
-    /* 如果获得线程控制块，启动这个线程 */
-    if ( shoot_thread_handle != RT_NULL)
-        rt_thread_startup(shoot_thread_handle);
-#endif /* BSP_USING_SHOOT_TASK*/
-
-#ifdef BSP_USING_REFEREE_TASK
-    /* 创建线程，名称是  shoot ，入口是  referee_task_entry */
-     referee_thread_handle = rt_thread_create("referee",
-                                              referee_thread_entry, RT_NULL,
-                                            768,15, 10);
-     /* 如果获得线程控制块，启动这个线程 */
-     if ( referee_thread_handle != RT_NULL)
-         rt_thread_startup(referee_thread_handle);
-#endif /* BSP_USING_REFEREE_TASK*/
+//
+//#ifdef BSP_USING_MOTOR_TASK
+//    /* 创建线程，名称是 motor ，入口是 motor_thread_entry */
+//    motor_thread_handle = rt_thread_create("motor",
+//                                           motor_thread_entry, RT_NULL,
+//                                           2048,15, 10);
+//    /* 如果获得线程控制块，启动这个线程 */
+//    if (motor_thread_handle != RT_NULL)
+//        rt_thread_startup(motor_thread_handle);
+//#endif /* BSP_USING_MOTOR_TASK */
+//
+//#ifdef BSP_USING_CMD_TASK
+//    /* 创建线程，名称是 cmd ，入口是 cmd_thread_entry */
+//    cmd_thread_handle = rt_thread_create("cmd",
+//                                         cmd_thread_entry, RT_NULL,
+//                                         1024,15, 10);
+//    /* 如果获得线程控制块，启动这个线程 */
+//    if (cmd_thread_handle != RT_NULL)
+//        rt_thread_startup(cmd_thread_handle);
+//#endif /* BSP_USING_CMD_TASK */
+//
+//#ifdef BSP_USING_CHASSIS_TASK
+//    /* 创建线程，名称是 chassis ，入口是 chassis_thread_entry */
+//    chassis_thread_handle = rt_thread_create("chassis",
+//                                             chassis_thread_entry, RT_NULL,
+//                                             1024,15, 10);
+//    /* 如果获得线程控制块，启动这个线程 */
+//    if (chassis_thread_handle != RT_NULL)
+//        rt_thread_startup(chassis_thread_handle);
+//#endif /* BSP_USING_CHASSIS_TASK */
+//
+//#ifdef BSP_USING_GIMBAL_TASK
+//    /* 创建线程，名称是 gimbal ，入口是 gimbal_thread_entry */
+//    gimbal_thread_handle = rt_thread_create("gimbal",
+//                                            gimbal_thread_entry, RT_NULL,
+//                                            1024,15, 10);
+//    /* 如果获得线程控制块，启动这个线程 */
+//    if (gimbal_thread_handle != RT_NULL)
+//        rt_thread_startup(gimbal_thread_handle);
+//#endif /* BSP_USING_GIMBAL_TASK */
+//
+//#ifdef BSP_USING_TRANSMISSION_TASK
+//    /* 创建线程，名称是  transmission ，入口是  transmission_task_entry */
+//    transmission_thread_handle = rt_thread_create("transmission",
+//                                                  transmission_task_entry, RT_NULL,
+//                                                  768,15, 10);
+//    /* 如果获得线程控制块，启动这个线程 */
+//    if ( transmission_thread_handle != RT_NULL)
+//        rt_thread_startup(transmission_thread_handle);
+//#endif /*BSP_USING_TRANSMISSION_TASK */
+//
+//#ifdef BSP_USING_SHOOT_TASK
+//    /* 创建线程，名称是  shoot ，入口是  shoot_task_entry */
+//    shoot_thread_handle = rt_thread_create("shoot",
+//                                           shoot_task_entry, RT_NULL,
+//                                           768,15, 10);
+//    /* 如果获得线程控制块，启动这个线程 */
+//    if ( shoot_thread_handle != RT_NULL)
+//        rt_thread_startup(shoot_thread_handle);
+//#endif /* BSP_USING_SHOOT_TASK*/
+//
+//#ifdef BSP_USING_REFEREE_TASK
+//    /* 创建线程，名称是  shoot ，入口是  referee_task_entry */
+//     referee_thread_handle = rt_thread_create("referee",
+//                                              referee_thread_entry, RT_NULL,
+//                                            768,15, 10);
+//     /* 如果获得线程控制块，启动这个线程 */
+//     if ( referee_thread_handle != RT_NULL)
+//         rt_thread_startup(referee_thread_handle);
+//#endif /* BSP_USING_REFEREE_TASK*/
 
     return RT_EOK;
 }

@@ -9,19 +9,6 @@
 #include <math.h>
 #include <rtdbg.h>
 
-//#define DBG_TAG   "imu.bmi088"
-//#define DBG_LVL DBG_LOG
-//#include <rtdbg.h>
-//
-///*********************************************************************************/
-//#ifdef BIT
-//#undef BIT
-//#endif
-//
-//#define BIT(_idx) (1 << _idx)
-//#define REG_VAL(_setbits, _clearbits) \
-//    (reg_val_t) { .setbits = (_setbits), .clearbits = (_clearbits) }
-///**********************************************************************************/    //寄存器移位有关函数,便于之后设置相关功能寄存器组合
 
 /*此六个寄存器中的值表示在制造测试过程中产生的自测试输出。此值用于检查最终用户执行的后续自测试输出*/
 #define MPU6500_SELF_TEST_XG        (0x00)
@@ -42,7 +29,6 @@
 /*四个配置寄存器说明如下文所示*/
 #define MPU6500_CONFIG              (0x1A)      // MPU-6500配置寄存器
 #define MPU6500_GYRO_CONFIG         (0x1B)     // MPU-6500陀螺仪配置寄存器
-#define MPU6500_ACC_PWR_CONF        (0x1C)     //MPU6500_ACCEL_CONFIG
 
 
 /*低功率加速度计ODR控制寄存器*/
@@ -139,7 +125,7 @@
 
 /*电源管理寄存器，用于配置MPU6500时钟源，控制传感器失能等*/
 #define MPU6500_PWR_MGMT_1         (0x6B)           //用于控制设备的电源状态和其他功能
-#define MPU6500_ACC_PWR_CTRL          (0x6C)        //控制各个传感器通断MPU6500_PWR_MGMT_2
+#define MPU6500_PWR_MGMT_2          (0x6C)        //控制各个传感器通断MPU6500_PWR_MGMT_2
 
 /*记录写入到FIFO的字节数*/
 #define MPU6500_FIFO_COUNTH         (0x72)
@@ -163,20 +149,13 @@
 #define MPU_IIC_ADDR				0x68
 
 
-#define MPU6500_ACC_BGW_CHIPID_VALUE 0x71     //mpu6500的ACC寄存器期望值
-#define MPU6500_ACC_BGW_CHIPID       0x75    //mpu6500ID读取地址
-
-
-#define MPU6500_Gyro_BGW_CHIPID_VALUE    0x70  //mpu6500的Gyro寄存器期望值
-#define MPU6500_GRRO_BGW_CHIPID            0x75
-
 #define MPU6500_ONE_G       (9.80665)   // 定义重力常数为9.80665 m/s?
 
 /*已查阅mpu6500_datasheet*/
 #define MPU6500_ACCEL_RANGE_2G  0x00
-#define MPU6500_ACCEL_RANGE_4G  0x01
+#define MPU6500_ACCEL_RANGE_4G  0x08
 #define MPU6500_ACCEL_RANGE_8G  0x10
-#define MPU6500_ACCEL_RANGE_16G 0x11
+#define MPU6500_ACCEL_RANGE_16G 0x18
 
 /*已查阅mpu6500_datasheet*/
 /*除以内部采样率(see register CONFIG)生成控制传感器数据输出速率的采样率，FIFO采样率.此寄存器只有在FCHOICE=2‘b11(FCHOICE_B寄存器位为2’b00)和(0<DLPF_CFG<7)时才有效采样率=
@@ -193,16 +172,17 @@
 #define MPU6500_ACCEL_RATE_1000 0x00  // 1000 Hz
 
 #define MPU6500_ACCEL_CONFIG       0x1C  // 加速度计配置寄存器
-#define MPU6500_DLPF_CFG           0x1D  // 数字低通滤波器配置寄存器MPU6500_ACCEL_CONFIG_2
+#define MPU6500_ACCEL_CONFIG_2     0x1D  // Accel数字低通滤波器配置寄存器
 
 /*已查阅mpu6500_datasheet*/
-#define MPU6500_BW_460_HZ         0x00  // 460Hz
-#define MPU6500_BW_184_HZ         0x01  // 184Hz
-#define MPU6500_BW_92_HZ          0x02  // 92Hz
-#define MPU6500_BW_41_HZ          0x03  // 41Hz
-#define MPU6500_BW_20_HZ          0x04  // 20Hz
-#define MPU6500_BW_10_HZ          0x05  // 10Hz
-#define MPU6500_BW_5_HZ           0x06  // 5Hz
+#define Accel_DLPF_0_HZ         0x00
+#define Accel_DLPF_5_HZ         0x01
+#define Accel_DLPF_10_HZ        0x02
+#define Accel_DLPF_20_HZ        0x03
+#define Accel_DLPF_42_HZ        0x04
+#define Accel_DLPF_99_HZ        0x05
+#define Accel_DLPF_188_HZ       0x06
+#define Accel_DLPF_256_HZ       0x07
 
 /*已查阅mpu6500_datasheet*/
 #define MPU6500_GYRO_RANGE_250_DPS  0x00  // ±250 dps
@@ -228,8 +208,8 @@ typedef struct {
     uint8_t clearbits;
 } reg_val_t;
 
-static rt_device_t gyro_spi_dev;
-static rt_device_t accel_spi_dev;
+
+static rt_device_t MPU6500_spi_dev;
 static float gyro_range_scale;
 static float accel_range_scale;
 static float sample_rate;
@@ -254,7 +234,7 @@ __attribute__((weak)) void MPU6500_gyro_rotate_to_frd(float* data)
 static rt_err_t gyro_read_raw(int16_t gyr[3])
 {
     uint8_t buffer[6];
-    spi_read_multi_reg8(gyro_spi_dev, MPU6500_GYRO_XOUT_H, (uint8_t*)gyr, 6);
+    spi_read_multi_reg8(MPU6500_spi_dev, MPU6500_GYRO_XOUT_H, (uint8_t*)gyr, 6);
 
     gyr[0] = buffer[0] << 8 | buffer[1];
     gyr[1] = buffer[2] << 8 | buffer[3];
@@ -304,11 +284,11 @@ static rt_err_t accel_set_range(uint32_t max_g)
     }
 
     // 向MPU-6500的加速度范围寄存器写入值
-    spi_write_reg8(accel_spi_dev, MPU6500_ACC_PWR_CONF, reg_val);
+    spi_write_reg8(MPU6500_spi_dev, MPU6500_ACCEL_CONFIG, reg_val);
     return RT_EOK;
 }
 
-static rt_err_t accel_set_sample_rate(uint32_t frequency_hz)
+static rt_err_t MPU6500_set_sample_rate(uint32_t frequency_hz)
 {
     uint8_t reg_val;
 
@@ -345,80 +325,69 @@ static rt_err_t accel_set_sample_rate(uint32_t frequency_hz)
     }
 
     // 设置采样频率
-    spi_write_reg8(accel_spi_dev, MPU6500_SMPLRT_DIV, reg_val);
+    spi_write_reg8(MPU6500_spi_dev, MPU6500_SMPLRT_DIV, reg_val);
 
     return RT_EOK;
 }
 
-static rt_err_t accel_set_bwp_odr(uint16_t dlpf_freq_hz)
+static rt_err_t accel_set_DLPF(uint16_t dlpf_freq_hz)  //设置accel的低通滤波器
 {
     uint8_t dlpf_val;
 
     // 根据输入的DLPF频率设置寄存器值
-    if (sample_rate <= 10) {
-        dlpf_val = MPU6500_BW_460_HZ;  // 设置250Hz带宽
-    } else if (sample_rate <= 25) {
-        dlpf_val = MPU6500_BW_184_HZ;  // 设置184Hz带宽
-    } else if (sample_rate <= 50) {
-        dlpf_val = MPU6500_BW_92_HZ;   // 设置92Hz带宽
-    } else if (sample_rate <= 100) {
-        dlpf_val = MPU6500_BW_41_HZ;   // 设置41Hz带宽
-    } else if (sample_rate <= 125) {
-        dlpf_val = MPU6500_BW_20_HZ;   // 设置20Hz带宽
-    } else if (sample_rate <= 250) {
-        dlpf_val = MPU6500_BW_10_HZ;   // 设置10Hz带宽
-    } else if (sample_rate <= 500) {
-        dlpf_val = MPU6500_BW_5_HZ;    // 设置5Hz带宽
-    } else {
+    if (sample_rate <= 0) {
+        dlpf_val = Accel_DLPF_0_HZ ;        //此时odr为1000Hz
+    } else if (sample_rate <= 5) {
+        dlpf_val = Accel_DLPF_5_HZ ;
+    } else if (sample_rate <= 10) {
+        dlpf_val = Accel_DLPF_10_HZ ;
+    } else if (sample_rate <= 20) {
+        dlpf_val = Accel_DLPF_20_HZ ;
+    } else if (sample_rate <= 42) {
+        dlpf_val = Accel_DLPF_42_HZ ;
+    } else if (sample_rate <= 99) {
+        dlpf_val = Accel_DLPF_99_HZ ;
+    } else if (sample_rate <= 188) {
+        dlpf_val = Accel_DLPF_188_HZ ;
+    }  else if (sample_rate <= 256) {
+        dlpf_val = Accel_DLPF_256_HZ ;       //此时odr为3.91Hz
+     }
+     else {
         return -RT_EINVAL; // 无效参数
     }
 
-    spi_write_reg8(accel_spi_dev, MPU6500_CONFIG, dlpf_val);
+    spi_write_reg8(MPU6500_spi_dev, MPU6500_ACCEL_CONFIG_2, dlpf_val);
     return RT_EOK;
 }
 
-static rt_err_t accelerometer_init(void)
+static rt_err_t gyro_set_sample_rate(uint32_t frequency_hz)
 {
-    uint8_t accel_id;
+    uint8_t reg_val;
 
-    /* init spi bus */
-    rt_device_open(accel_spi_dev, RT_DEVICE_OFLAG_RDWR);
-
-    /* dummy read to let accel enter SPI mode */
-    spi_read_reg8(accel_spi_dev, MPU6500_ACC_BGW_CHIPID, &accel_id);
-    rt_hw_us_delay(1000);
-    spi_read_reg8(accel_spi_dev, MPU6500_ACC_BGW_CHIPID, &accel_id);
-
-    /* read accel id */
-    spi_read_reg8(accel_spi_dev, MPU6500_ACC_BGW_CHIPID, &accel_id);
-    if (accel_id != MPU6500_ACC_BGW_CHIPID_VALUE) {
-        LOG_W("Warning: not found MPU6500 accel id: %02x", accel_id);
-        return RT_ERROR;
+    // 根据输入的频率设置DLPF的带宽
+    if (frequency_hz <= 5) {
+        reg_val = MPU6500_GYRO_BW_5;    // 设置5Hz带宽
+    } else if (frequency_hz <= 10) {
+        reg_val = MPU6500_GYRO_BW_10;   // 设置10Hz带宽
+    } else if (frequency_hz <= 20) {
+        reg_val = MPU6500_GYRO_BW_20;   // 设置5Hz带宽
+    } else if (frequency_hz <= 41) {
+        reg_val = MPU6500_GYRO_BW_41;   // 设置41Hz带宽
+    } else if (frequency_hz <= 92) {
+        reg_val = MPU6500_GYRO_BW_92;   // 设置92Hz带宽
+    } else if (frequency_hz <= 184) {
+        reg_val = MPU6500_GYRO_BW_184;   // 设置184Hz带宽
+    } else if (frequency_hz <= 250) {
+        reg_val = MPU6500_GYRO_BW_250;  // 设置250Hz带宽
+    } else {
+        return RT_EINVAL;  // 返回无效参数
     }
-    /* hardware reset */
-    spi_write_reg8(accel_spi_dev, MPU6500_PWR_MGMT_1, 0x80);     /* 重置设备*/
-    rt_hw_us_delay(2000);
-    /* soft reset */
-    spi_write_reg8(accel_spi_dev, MPU6500_BGW_SOFT_RST, 0x07);     /* 软件重置设备*/
-    rt_hw_us_delay(2000);
-    /* dummy read to let accel enter SPI mode */
-    spi_read_reg8(accel_spi_dev, MPU6500_ACC_BGW_CHIPID, &accel_id);
-    /* enter normal mode */
-    spi_write_reg8(accel_spi_dev, MPU6500_ACC_PWR_CTRL, 0x00);      /* 启动 Acc & Gyro */
-    rt_hw_us_delay(55000);
 
-    /* set default range and bandwidth */
-    accel_set_range(6);          /* 6g */
-    accel_set_sample_rate(800);  /* 800Hz sample rate */
-    accel_set_bwp_odr(280);      /* Normal BW */
-
-    /* enter active mode */
-    spi_write_reg8(accel_spi_dev, MPU6500_ACC_PWR_CONF, 0x10);    /* +-8G */
-    rt_hw_us_delay(1000);
+    // 写入陀螺仪配置寄存器以设置采样率和带宽
+    spi_write_reg8(MPU6500_spi_dev, MPU6500_CONFIG, reg_val);
 
     return RT_EOK;
 }
-
 
 static rt_err_t gyro_set_range(unsigned max_dps)
 {
@@ -446,7 +415,7 @@ static rt_err_t gyro_set_range(unsigned max_dps)
     }
 
     // 写入陀螺仪配置寄存器
-    spi_write_reg8(gyro_spi_dev, MPU6500_GYRO_CONFIG, reg_val);
+    spi_write_reg8(MPU6500_spi_dev, MPU6500_GYRO_CONFIG, reg_val);
 
     // 计算每个LSB代表的度数（以弧度为单位）
     gyro_range_scale = (M_PI_F / (180.0f * lsb_per_dps));
@@ -454,62 +423,49 @@ static rt_err_t gyro_set_range(unsigned max_dps)
     return RT_EOK;
 }
 
-static rt_err_t gyro_set_sample_rate(uint32_t frequency_hz)
+static rt_err_t MPU6500_Register_SET(void)
 {
-    uint8_t reg_val;
-
-    // 根据输入的频率设置DLPF的带宽
-    if (frequency_hz <= 10) {
-        reg_val = MPU6500_GYRO_BW_5;    // 设置5Hz带宽
-    } else if (frequency_hz <= 20) {
-        reg_val = MPU6500_GYRO_BW_10;   // 设置10Hz带宽
-    } else if (frequency_hz <= 41) {
-        reg_val = MPU6500_GYRO_BW_20;   // 设置20Hz带宽
-    } else if (frequency_hz <= 92) {
-        reg_val = MPU6500_GYRO_BW_41;   // 设置41Hz带宽
-    } else if (frequency_hz <= 184) {
-        reg_val = MPU6500_GYRO_BW_92;   // 设置92Hz带宽
-    } else if (frequency_hz <= 250) {
-        reg_val = MPU6500_GYRO_BW_184;  // 设置184Hz带宽
-    } else if (frequency_hz <= 1000) {
-        reg_val = MPU6500_GYRO_BW_250;  // 设置250Hz带宽
-    } else {
-        return RT_EINVAL;  // 返回无效参数
-    }
-
-    // 写入陀螺仪配置寄存器以设置采样率和带宽
-    spi_write_reg8(gyro_spi_dev, MPU6500_CONFIG, reg_val);
-
-    return RT_EOK;
-}
-
-static rt_err_t gyroscope_init(void)
-{
-    uint8_t gyro_id;
-
-    /* 初始化SPI总线 */
-    rt_device_open(gyro_spi_dev, RT_DEVICE_OFLAG_RDWR);
-
-    /* 读取芯片ID */
-    spi_read_reg8(gyro_spi_dev, MPU6500_GRRO_BGW_CHIPID, &gyro_id);
-    if (gyro_id != MPU6500_Gyro_BGW_CHIPID_VALUE) {
-        LOG_W("Warning: not found MPU6500 gyro id: %02x", gyro_id);
+    uint8_t MPU6500_id;
+    /* init spi bus */
+    rt_device_open(MPU6500_spi_dev, RT_DEVICE_OFLAG_RDWR);
+    /* read mpu6500 id */
+    spi_read_reg8(MPU6500_spi_dev, MPU6500_WHO_AM_I, &MPU6500_id);
+    if (MPU6500_id != MPU6500_ID) {      //确认设备
+        LOG_W("Warning: not found MPU6500 accel id: %02x", MPU6500_id);
         return RT_ERROR;
     }
+    /* hardware reset */
+    spi_write_reg8(MPU6500_spi_dev, MPU6500_PWR_MGMT_1, 0x80);     /* 重置设备*/
+    rt_hw_us_delay(200);
 
-    /* 执行软复位 */
-    spi_write_reg8(gyro_spi_dev, MPU6500_BGW_SOFT_RST, 0x80); // 发送软复位命令
-    rt_hw_us_delay(35000); // 等待大于30ms
+    /* gyro clock set */
+    spi_write_reg8(MPU6500_spi_dev, MPU6500_PWR_MGMT_1, 0x03);     /* 陀螺仪时钟源设置*/
+    rt_hw_us_delay(200);
 
-    gyro_set_range(2000);       /* 2000dps */
-    gyro_set_sample_rate(2000); /* OSR 2000KHz, Filter BW: 230Hz */
+    /* start Acc and Gyro */
+    spi_write_reg8(MPU6500_spi_dev, MPU6500_PWR_MGMT_2, 0x00);     /* 启动Acc & Gyro */
+    rt_hw_us_delay(200);
 
-    /* enable gyroscope */
-    spi_write_reg8(gyro_spi_dev, MPU6500_ACC_PWR_CTRL, 0x00);  /* 启动 Acc & Gyro */
-    rt_hw_us_delay(1000);
+    gyro_set_sample_rate(41);
+    rt_hw_us_delay(200);
+
+    gyro_set_range(2000);   /* +- 2000dps */
+    rt_hw_us_delay(200);
+
+    accel_set_range(8);       /* Accel range +-8g  */
+    rt_hw_us_delay(200);
+
+    MPU6500_set_sample_rate(1000);
+    rt_hw_us_delay(200);
+
+    accel_set_DLPF(10);     /* Accel 低通滤波此处为10Hz */
+    rt_hw_us_delay(200);
+
 
     return RT_EOK;
 }
+
+
 
 /**
  * @brief 初始化MPU6500
@@ -518,10 +474,10 @@ static rt_err_t gyroscope_init(void)
  */
 static rt_err_t MPU6500_init(void)
 {
-    /* Initialize accelerometer */
-    rt_hw_spi_device_attach(SPI_ACC, "MPU6500_a", SPI_ACC_CS);
-    accel_spi_dev = rt_device_find("MPU6500_a");
-    RT_ASSERT(accel_spi_dev != NULL);
+    /* Initialize mpu6500 */
+    rt_hw_spi_device_attach(SPI_MPU6500, "MPU6500", SPI_MPU6500_CS);
+    MPU6500_spi_dev = rt_device_find("MPU6500");
+    RT_ASSERT(MPU6500_spi_dev != NULL);//指针不为空,找到spi5总线上挂载的MPU6500
     /* config spi 配置spi参数*/
     {
         struct rt_spi_configuration cfg;
@@ -529,36 +485,16 @@ static rt_err_t MPU6500_init(void)
         cfg.mode = RT_SPI_MODE_3 | RT_SPI_MSB; /* SPI Compatible Modes 3 */
         cfg.max_hz = 7000000;
 
-        struct rt_spi_device* spi_device_t = (struct rt_spi_device*)accel_spi_dev;
+        struct rt_spi_device* spi_device_t = (struct rt_spi_device*)MPU6500_spi_dev;
         spi_device_t->config.data_width = cfg.data_width;
         spi_device_t->config.mode = cfg.mode & RT_SPI_MODE_MASK;
         spi_device_t->config.max_hz = cfg.max_hz;
 
         rt_spi_configure(spi_device_t, &cfg);
     }
-    /* accelerometer low-level init */
-    accelerometer_init();
 
-    /* Initialize gyroscope */
-    rt_hw_spi_device_attach(SPI_GYRO, "MPU6500_g", SPI_GYRO_CS);
-    gyro_spi_dev = rt_device_find("MPU6500_g");
-    RT_ASSERT(gyro_spi_dev != NULL);
-    /* config spi */
-    {
-        struct rt_spi_configuration cfg;
-        cfg.data_width = 8;
-        cfg.mode = RT_SPI_MODE_3 | RT_SPI_MSB; /* SPI Compatible Modes 3 */
-        cfg.max_hz = 7000000;
+    MPU6500_Register_SET();
 
-        struct rt_spi_device* spi_device_t = (struct rt_spi_device*)gyro_spi_dev;
-        spi_device_t->config.data_width = cfg.data_width;
-        spi_device_t->config.mode = cfg.mode & RT_SPI_MODE_MASK;
-        spi_device_t->config.max_hz = cfg.max_hz;
-
-        rt_spi_configure(spi_device_t, &cfg);
-    }
-    /* gyroscope low-level init */
-    gyroscope_init();
     gyro_offset[0] = GxOFFSET;
     gyro_offset[1] = GyOFFSET;
     gyro_offset[2] = GzOFFSET;
@@ -590,28 +526,6 @@ static rt_err_t MPU6500_gyro_read(float data[3])
 }
 
 
-static rt_err_t gyro_set_dlpf_filter(uint16_t frequency_hz)
-{
-    /* lpf bw is set by MPU6500_BW_ADDR */
-    (void)frequency_hz;
-
-    return RT_EOK;
-}
-
-/**
- * @brief 设置MPU6500的陀螺仪配置
- *
- * @param cfg 配置参数
- * @return rt_err_t
- */
-static rt_err_t MPU6500_gyro_config(struct gyro_configure cfg)
-{
-    gyro_set_sample_rate(cfg.sample_rate_hz);
-    gyro_set_dlpf_filter(cfg.dlpf_freq_hz);
-    gyro_set_range(cfg.gyro_range_dps);
-
-    return RT_EOK;
-}
 
 static rt_err_t accel_read_raw(int16_t acc[3])
 {
@@ -620,11 +534,11 @@ static rt_err_t accel_read_raw(int16_t acc[3])
     /* In case of read operations of the accelerometer part, the requested data is not sent
     immediately, but instead first a dummy byte is sent, and after this dummy byte the actual
     reqested register content is transmitted. */
-    spi_read_multi_reg8(accel_spi_dev, MPU6500_ACCEL_XOUT_H, buffer, 7);
+    spi_read_multi_reg8(MPU6500_spi_dev, MPU6500_ACCEL_XOUT_H, buffer, 6);
 
-    acc[0] = buffer[1] << 8 | buffer[2];
-    acc[1] = buffer[3] << 8 | buffer[4];
-    acc[2] = buffer[5] << 8 | buffer[6];
+    acc[0] = buffer[0] << 8 | buffer[1];
+    acc[1] = buffer[2] << 8 | buffer[3];
+    acc[2] = buffer[4] << 8 | buffer[5];
 
     return RT_EOK;
 }
@@ -660,20 +574,7 @@ static rt_err_t MPU6500_accel_read(float data[3])
     return RT_EOK;
 }
 
-/**
- * @brief 设置MPU6500的加速度计配置
- *
- * @param cfg 配置参数
- * @return rt_err_t
- */
-static  rt_err_t MPU6500_accel_config(struct accel_configure cfg)
-{
-    accel_set_sample_rate(cfg.sample_rate_hz);
-    accel_set_bwp_odr(cfg.dlpf_freq_hz);
-    accel_set_range(cfg.acc_range_g);
 
-    return RT_EOK;
-}
 
 /**
  * @brief 读取MPU6500的温度
@@ -686,7 +587,7 @@ static float MPU6500_temp_read(void)
     static int16_t raw_temp;
     static float temp;
 
-    spi_read_multi_reg8(accel_spi_dev, MPU6500_TEMP_OUT_H, buffer, 2);
+    spi_read_multi_reg8(MPU6500_spi_dev, MPU6500_TEMP_OUT_H, buffer, 2);
     raw_temp = (int16_t)((buffer[0] << 8) | buffer[1]);
     if (raw_temp > 1023)
     {
@@ -820,8 +721,6 @@ static void MPU6500_calibrate(void){
 struct imu_ops imu_ops = {
         .imu_init = MPU6500_init,
         .gyro_read = MPU6500_gyro_read,
-        .gyro_config = MPU6500_gyro_config,
         .accel_read = MPU6500_accel_read,
-        .accel_config = MPU6500_accel_config,
         .temp_read = MPU6500_temp_read,
 };

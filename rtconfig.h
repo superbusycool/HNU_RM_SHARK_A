@@ -382,7 +382,7 @@
 
 #define BSP_USING_GPIO
 #define BSP_USING_UART
-//#define BSP_USING_UART6
+#define BSP_USING_UART6
 #define BSP_USING_UART1
 #define BSP_USING_CAN
 #define BSP_USING_CAN1

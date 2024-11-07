@@ -195,7 +195,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "d:/HNU_RM_CodeStorage/HNU_A_Try3_Test/HNU_RM_SHARK_A/cmake-build-debug"
+			"value" : "d:/HNU_RM_CodeStorage/HNU_A_Test_Try4/HNU_RM_SHARK_A/cmake-build-debug"
 		},
 		{
 			"name" : "CMAKE_CACHE_MAJOR_VERSION",
@@ -767,7 +767,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "D:/HNU_RM_CodeStorage/HNU_A_Try3_Test/HNU_RM_SHARK_A/cmake-build-debug/CMakeFiles/pkgRedirects"
+			"value" : "D:/HNU_RM_CodeStorage/HNU_A_Test_Try4/HNU_RM_SHARK_A/cmake-build-debug/CMakeFiles/pkgRedirects"
 		},
 		{
 			"name" : "CMAKE_GENERATOR",
@@ -827,7 +827,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "D:/HNU_RM_CodeStorage/HNU_A_Try3_Test/HNU_RM_SHARK_A"
+			"value" : "D:/HNU_RM_CodeStorage/HNU_A_Test_Try4/HNU_RM_SHARK_A"
 		},
 		{
 			"name" : "CMAKE_INSTALL_PREFIX",
@@ -1479,7 +1479,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "D:/HNU_RM_CodeStorage/HNU_A_Try3_Test/HNU_RM_SHARK_A/cmake-build-debug"
+			"value" : "D:/HNU_RM_CodeStorage/HNU_A_Test_Try4/HNU_RM_SHARK_A/cmake-build-debug"
 		},
 		{
 			"name" : "rtthread_IS_TOP_LEVEL",
@@ -1503,7 +1503,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "D:/HNU_RM_CodeStorage/HNU_A_Try3_Test/HNU_RM_SHARK_A"
+			"value" : "D:/HNU_RM_CodeStorage/HNU_A_Test_Try4/HNU_RM_SHARK_A"
 		}
 	],
 	"kind" : "cache",

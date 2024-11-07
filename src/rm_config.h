@@ -12,15 +12,12 @@
 #define CAN_CHASSIS    "can1"
 #define CAN_GIMBAL     "can2"
 
-/* 磁力计所挂载的 i2c 设备名称(软件i2c) */
-#define I2C_MAG        "i2c1"    //"Notice: PA8 --> 8; PC9 --> 41"
 
-/* 陀螺仪所挂载的 SPI 设备名称及 CS 引脚 */
-#define SPI_GYRO       "spi5"
-#define SPI_GYRO_CS    15
-/* 加速度计所挂载的 SPI 设备名称及 CS 引脚 */
-#define SPI_ACC        "spi5"
-#define SPI_ACC_CS     16
+
+/* MPU6500所挂载的 SPI 设备名称及 CS 引脚 */
+#define SPI_MPU6500        "spi5"
+#define SPI_MPU6500_CS      GET_PIN(F,6)      // Nss/cs   PF6
+
 
 /* 弹仓盖舵机所挂载的 PWM 设备及通道号 */
 #define PWM_COVER        "pwm1"

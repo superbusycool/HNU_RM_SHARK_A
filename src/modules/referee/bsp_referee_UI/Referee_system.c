@@ -115,53 +115,53 @@ void referee_thread_entry(void *argument)
     }
 }
 
-/**
- *@brief 裁判系统线程入口函数
- *
- */
-void USART6_IRQHandler(void)
-{
-    if (huart6.Instance->SR & UART_FLAG_RXNE)
-    {
-        __HAL_UART_CLEAR_PEFLAG(&huart6);
-    }
-    else if (USART6->SR & UART_FLAG_IDLE)
-    {
-        static uint16_t this_time_rx_len = 0;
-
-        __HAL_UART_CLEAR_IDLEFLAG(&huart6);      //清除空闲中断
-
-        if ((hdma_usart6_rx.Instance->CR & DMA_SxCR_CT) == RESET) //如果当前的缓冲区是缓冲区0
-        {
-            //计算这一帧接收的数据的长度
-            __HAL_DMA_DISABLE(&hdma_usart6_rx);
-            this_time_rx_len = Agreement_RX_BUF_NUM - hdma_usart6_rx.Instance->NDTR;
-            //重新设定数据长度
-            hdma_usart6_rx.Instance->NDTR = Agreement_RX_BUF_NUM;
-            //把缓冲区设置成缓冲区1
-            hdma_usart6_rx.Instance->CR |= DMA_SxCR_CT;
-
-            __HAL_DMA_ENABLE(&hdma_usart6_rx);
-            //将这1帧数据放入fifo0
-            fifo_s_puts(&RX_AgreementData_FIFO, (char *) RX_AgreementData_Buffer0, this_time_rx_len);
-        }
-        else //如果当前的缓冲区是缓冲区1
-        {
-            //计算这一帧接收的数据的长度
-            __HAL_DMA_DISABLE(&hdma_usart6_rx);
-            this_time_rx_len = Agreement_RX_BUF_NUM -hdma_usart6_rx.Instance->NDTR;
-            //osSemaphoreRelease(RefereeRxOKHandle);  //释放信号量
-            //重新设定数据长度
-            hdma_usart6_rx.Instance->NDTR = Agreement_RX_BUF_NUM;
-            //把缓冲区设置成缓冲区0
-            hdma_usart6_rx.Instance->CR &= ~DMA_SxCR_CT;
-            __HAL_DMA_ENABLE(&hdma_usart6_rx);
-            fifo_s_puts(&RX_AgreementData_FIFO, (char *) RX_AgreementData_Buffer1, this_time_rx_len);
-
-        }
-    }
-    HAL_UART_IRQHandler(&huart6);
-}
+///**
+// *@brief 裁判系统线程入口函数
+// *
+// */
+//void USART6_IRQHandler(void)
+//{
+//    if (huart6.Instance->SR & UART_FLAG_RXNE)
+//    {
+//        __HAL_UART_CLEAR_PEFLAG(&huart6);
+//    }
+//    else if (USART6->SR & UART_FLAG_IDLE)
+//    {
+//        static uint16_t this_time_rx_len = 0;
+//
+//        __HAL_UART_CLEAR_IDLEFLAG(&huart6);      //清除空闲中断
+//
+//        if ((hdma_usart6_rx.Instance->CR & DMA_SxCR_CT) == RESET) //如果当前的缓冲区是缓冲区0
+//        {
+//            //计算这一帧接收的数据的长度
+//            __HAL_DMA_DISABLE(&hdma_usart6_rx);
+//            this_time_rx_len = Agreement_RX_BUF_NUM - hdma_usart6_rx.Instance->NDTR;
+//            //重新设定数据长度
+//            hdma_usart6_rx.Instance->NDTR = Agreement_RX_BUF_NUM;
+//            //把缓冲区设置成缓冲区1
+//            hdma_usart6_rx.Instance->CR |= DMA_SxCR_CT;
+//
+//            __HAL_DMA_ENABLE(&hdma_usart6_rx);
+//            //将这1帧数据放入fifo0
+//            fifo_s_puts(&RX_AgreementData_FIFO, (char *) RX_AgreementData_Buffer0, this_time_rx_len);
+//        }
+//        else //如果当前的缓冲区是缓冲区1
+//        {
+//            //计算这一帧接收的数据的长度
+//            __HAL_DMA_DISABLE(&hdma_usart6_rx);
+//            this_time_rx_len = Agreement_RX_BUF_NUM -hdma_usart6_rx.Instance->NDTR;
+//            //osSemaphoreRelease(RefereeRxOKHandle);  //释放信号量
+//            //重新设定数据长度
+//            hdma_usart6_rx.Instance->NDTR = Agreement_RX_BUF_NUM;
+//            //把缓冲区设置成缓冲区0
+//            hdma_usart6_rx.Instance->CR &= ~DMA_SxCR_CT;
+//            __HAL_DMA_ENABLE(&hdma_usart6_rx);
+//            fifo_s_puts(&RX_AgreementData_FIFO, (char *) RX_AgreementData_Buffer1, this_time_rx_len);
+//
+//        }
+//    }
+//    HAL_UART_IRQHandler(&huart6);
+//}
 
 
 /**

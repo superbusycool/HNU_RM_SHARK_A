@@ -46,11 +46,7 @@ extern "C" {
             GYRO_RANGE_2000DPS, /* +-2000 deg/s */       \
     }
 
-struct gyro_configure {
-    rt_uint32_t sample_rate_hz;
-    rt_uint16_t dlpf_freq_hz;
-    rt_uint32_t gyro_range_dps;
-};
+
 /* ---------------------------------- GYRO ---------------------------------- */
 
 /* ---------------------------------- ACCLE --------------------------------- */
@@ -72,19 +68,13 @@ struct gyro_configure {
             ACCEL_RANGE_6G,  /* +-6g */                         \
     }
 
-struct accel_configure {
-    rt_uint32_t sample_rate_hz; /* sample rate in Hz */
-    rt_uint16_t dlpf_freq_hz;   /* internal low-pass filter cur-off freq in Hz */
-    rt_uint32_t acc_range_g;    /* accel measure range in g */
-};
+
 /* ---------------------------------- ACCLE --------------------------------- */
 
 struct imu_ops{
     rt_err_t (*imu_init)(void);
     rt_err_t (*gyro_read)(float data[3]);
-    rt_err_t (*gyro_config)(struct gyro_configure cfg);
     rt_err_t (*accel_read)(float data[3]);
-    rt_err_t (*accel_config)(struct accel_configure cfg);
     float (*temp_read)(void);
 };
 
