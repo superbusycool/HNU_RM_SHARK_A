@@ -1,8 +1,8 @@
- /*
- * Change Logs:
- * Date            Author          Notes
- * 2023-08-23      ChuShicheng     first version
- */
+/*
+* Change Logs:
+* Date            Author          Notes
+* 2023-08-23      ChuShicheng     first version
+*/
 #ifndef _RM_CONFIG_H
 #define _RM_CONFIG_H
 

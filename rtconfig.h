@@ -395,11 +395,16 @@
 
 /* Notice: PE4 --> 68; PE5 --> 69 */
 
-#define BSP_I2C1_SCL_PIN 68
-#define BSP_I2C1_SDA_PIN 69
+#define BSP_I2C1_SCL_PIN GET_PIN(E,4)
+#define BSP_I2C1_SDA_PIN GET_PIN(E,5)
 #define BSP_USING_PWM
 #define BSP_USING_PWM12
 #define BSP_USING_PWM12_CH1
+#define BSP_USING_PWM3
+#define BSP_USING_PWM3_CH1
+#define BSP_USING_PWM3_CH2
+#define BSP_USING_PWM3_CH3
+#define BSP_USING_PWM3_CH4
 #define BSP_USING_PWM4
 #define BSP_USING_PWM4_CH1
 #define BSP_USING_PWM4_CH2
@@ -462,6 +467,7 @@
 #define BSP_USING_TRANSMISSION_TASK
 #define BSP_USING_SHOOT_TASK
 #define BSP_USING_REFEREE
+//#define BSP_MPU6500_CALI         //MPU6500校准,gNom,gyro-offset
 /* end of RoboMaster Tasks */
 
 /* Board extended module Drivers */

@@ -149,7 +149,6 @@
 #define MPU_IIC_ADDR				0x68
 
 
-#define MPU6500_ONE_G       (9.80665)   // 定义重力常数为9.80665 m/s?
 
 /*已查阅mpu6500_datasheet*/
 #define MPU6500_ACCEL_RANGE_2G  0x00
@@ -200,8 +199,9 @@
 #define MPU6500_GYRO_BW_5        0x06  // 5Hz带宽
 
 #define M_PI_F       3.1415926f
+#define MPU6500_ONE_G       (9.80665)   // 定义重力常数为9.80665 m/s?
 #define MPU6500_TEMP_FACTOR 0.00294118f     //(1.0f / 340.0f)  每个原始单位对应的温度增量
-#define MPU6500_TEMP_OFFSET 36.53f          //未测试过
+#define MPU6500_TEMP_OFFSET 23.0f          //未测试过
 
 typedef struct {
     uint8_t setbits;
@@ -216,14 +216,15 @@ static float sample_rate;
 
 /* 通过校准得到的数据 */
 static float gyro_offset[3];
+static float accel_offset[3];
 static uint8_t cali_count;  // 校准次数
 float MPU6500_g_norm;        // 通过校准得出的重力加速度
 float accel_scale;          // 根据标定结果校准加速度计标度因数
 // 需定期校准后手动修改
-#define GxOFFSET  0.00000127707f
-#define GyOFFSET -0.00000808811f
-#define GzOFFSET -0.00002852123f
-#define gNORM 9.744925f
+#define GxOFFSET  -0.000031075f
+#define GyOFFSET  -0.000007662f
+#define GzOFFSET  -0.000004470f
+#define gNORM 9.541743f
 
 /* Re-implement this function to define customized rotation */
 __attribute__((weak)) void MPU6500_gyro_rotate_to_frd(float* data)
@@ -231,10 +232,53 @@ __attribute__((weak)) void MPU6500_gyro_rotate_to_frd(float* data)
     /* do nothing */
     (void)data;
 }
+
+/* Re-implement this function to define customized rotation */
+__attribute__((weak)) void MPU6500_acc_rotate_to_frd(float* data)
+{
+    /* do nothing */
+    (void)data;
+}
+
+
+static rt_err_t accel_read_offset(){
+
+    uint8_t buffer[6];
+    int i;
+    for (i=0; i<300;i++)
+    {
+        spi_read_multi_reg8(MPU6500_spi_dev,MPU6500_XA_OFFSET_H, (uint8_t*)buffer, 6);
+
+        accel_offset[0] += (buffer[0] << 8 | buffer[1]);
+        accel_offset[1] += (buffer[2] << 8 | buffer[3]);
+        accel_offset[2] += (buffer[4] << 8 | buffer[5]);
+
+        rt_hw_us_delay(50);
+    }
+
+    accel_offset[0]= accel_offset[0]/300/4096;
+    accel_offset[1]= accel_offset[1]/300/4096;
+    accel_offset[2]= accel_offset[2]/300/4096;   //300次偏移量求平均
+
+//    accel_offset[0]= accel_offset[0]/300/32768;
+//    accel_offset[1]= accel_offset[1]/300/32768;
+//    accel_offset[2]= accel_offset[2]/300/32768;   //300次偏移量求平均
+
+//
+//    accel_offset[0]=accel_range_scale * accel_offset[0] * accel_scale;
+//    accel_offset[1]=accel_range_scale * accel_offset[1] * accel_scale;
+//    accel_offset[2]=accel_range_scale * accel_offset[2] * accel_scale;
+
+//    accel_offset[0]=accel_range_scale * accel_offset[0];
+//    accel_offset[1]=accel_range_scale * accel_offset[1];
+//    accel_offset[2]=accel_range_scale * accel_offset[2];
+
+}
+
 static rt_err_t gyro_read_raw(int16_t gyr[3])
 {
     uint8_t buffer[6];
-    spi_read_multi_reg8(MPU6500_spi_dev, MPU6500_GYRO_XOUT_H, (uint8_t*)gyr, 6);
+    spi_read_multi_reg8(MPU6500_spi_dev, MPU6500_GYRO_XOUT_H, (uint8_t*)buffer, 6);
 
     gyr[0] = buffer[0] << 8 | buffer[1];
     gyr[1] = buffer[2] << 8 | buffer[3];
@@ -248,10 +292,22 @@ static rt_err_t gyro_read_rad(float gyr[3])
     int16_t gyr_raw[3];
 
     gyro_read_raw(gyr_raw);
+//    /* 2000dps -> rad/s */
+//    gyr[0] = gyro_range_scale * (gyr_raw[0] - gyro_offset[0]);
+//    gyr[1] = gyro_range_scale * (gyr_raw[1] - gyro_offset[1]);
+//    gyr[2] = gyro_range_scale * (gyr_raw[2] - gyro_offset[2]);
+
+//    gyr[0] =(gyr_raw[0] - gyro_offset[0])/16.384f / 57.3f;
+//    gyr[1] =(gyr_raw[1] - gyro_offset[1])/16.384f / 57.3f;
+//    gyr[2] =(gyr_raw[2] - gyro_offset[2])/16.384f / 57.3f;
 
     gyr[0] = gyro_range_scale * gyr_raw[0] - gyro_offset[0];
     gyr[1] = gyro_range_scale * gyr_raw[1] - gyro_offset[1];
     gyr[2] = gyro_range_scale * gyr_raw[2] - gyro_offset[2];
+
+//    gyr[0] =gyr_raw[0] ;
+//    gyr[1] =gyr_raw[1] ;
+//    gyr[2] =gyr_raw[2];
 
     return RT_EOK;
 }
@@ -351,8 +407,8 @@ static rt_err_t accel_set_DLPF(uint16_t dlpf_freq_hz)  //设置accel的低通滤波器
         dlpf_val = Accel_DLPF_188_HZ ;
     }  else if (sample_rate <= 256) {
         dlpf_val = Accel_DLPF_256_HZ ;       //此时odr为3.91Hz
-     }
-     else {
+    }
+    else {
         return -RT_EINVAL; // 无效参数
     }
 
@@ -449,7 +505,7 @@ static rt_err_t MPU6500_Register_SET(void)
     gyro_set_sample_rate(41);
     rt_hw_us_delay(200);
 
-    gyro_set_range(2000);   /* +- 2000dps */
+    gyro_set_range(1000);   /* +- 2000dps */
     rt_hw_us_delay(200);
 
     accel_set_range(8);       /* Accel range +-8g  */
@@ -458,55 +514,13 @@ static rt_err_t MPU6500_Register_SET(void)
     MPU6500_set_sample_rate(1000);
     rt_hw_us_delay(200);
 
-    accel_set_DLPF(10);     /* Accel 低通滤波此处为10Hz */
+    accel_set_DLPF(42);     /* Accel 低通滤波此处为20Hz */
     rt_hw_us_delay(200);
 
 
     return RT_EOK;
 }
 
-
-
-/**
- * @brief 初始化MPU6500
- *
- * @return rt_err_t
- */
-static rt_err_t MPU6500_init(void)
-{
-    /* Initialize mpu6500 */
-    rt_hw_spi_device_attach(SPI_MPU6500, "MPU6500", SPI_MPU6500_CS);
-    MPU6500_spi_dev = rt_device_find("MPU6500");
-    RT_ASSERT(MPU6500_spi_dev != NULL);//指针不为空,找到spi5总线上挂载的MPU6500
-    /* config spi 配置spi参数*/
-    {
-        struct rt_spi_configuration cfg;
-        cfg.data_width = 8;
-        cfg.mode = RT_SPI_MODE_3 | RT_SPI_MSB; /* SPI Compatible Modes 3 */
-        cfg.max_hz = 7000000;
-
-        struct rt_spi_device* spi_device_t = (struct rt_spi_device*)MPU6500_spi_dev;
-        spi_device_t->config.data_width = cfg.data_width;
-        spi_device_t->config.mode = cfg.mode & RT_SPI_MODE_MASK;
-        spi_device_t->config.max_hz = cfg.max_hz;
-
-        rt_spi_configure(spi_device_t, &cfg);
-    }
-
-    MPU6500_Register_SET();
-
-    gyro_offset[0] = GxOFFSET;
-    gyro_offset[1] = GyOFFSET;
-    gyro_offset[2] = GzOFFSET;
-    MPU6500_g_norm = gNORM;
-    accel_scale = 9.81f / MPU6500_g_norm;
-    /* calibrate */
-#ifdef BSP_MPU6500_CALI
-    MPU6500_calibrate();
-#endif /* BSP_MPU6500_CALI */
-
-    return RT_EOK;
-}
 
 /**
  * @brief 读取MPU6500的加速度计数据
@@ -529,12 +543,12 @@ static rt_err_t MPU6500_gyro_read(float data[3])
 
 static rt_err_t accel_read_raw(int16_t acc[3])
 {
-    uint8_t buffer[7];
+    uint8_t buffer[6];
 
     /* In case of read operations of the accelerometer part, the requested data is not sent
     immediately, but instead first a dummy byte is sent, and after this dummy byte the actual
     reqested register content is transmitted. */
-    spi_read_multi_reg8(MPU6500_spi_dev, MPU6500_ACCEL_XOUT_H, buffer, 6);
+    spi_read_multi_reg8(MPU6500_spi_dev, MPU6500_ACCEL_XOUT_H, (uint8_t *)buffer, 6);
 
     acc[0] = buffer[0] << 8 | buffer[1];
     acc[1] = buffer[2] << 8 | buffer[3];
@@ -550,9 +564,29 @@ static rt_err_t accel_read_m_s2(float acc[3])
 
     accel_read_raw(acc_raw);
 
-    acc[0] = accel_range_scale * acc_raw[0] * accel_scale;
-    acc[1] = accel_range_scale * acc_raw[1] * accel_scale;
-    acc[2] = accel_range_scale * acc_raw[2] * accel_scale;
+    acc[0] = accel_range_scale * acc_raw[0] * accel_scale ;
+    acc[1] = accel_range_scale * acc_raw[1] * accel_scale ;
+    acc[2] = accel_range_scale * acc_raw[2] * accel_scale ;
+
+//    acc[0] =  acc_raw[0]/32768  - accel_offset[0];
+//    acc[1] =  acc_raw[1]/32768  - accel_offset[1];
+//    acc[2] =  acc_raw[2]/32768  - accel_offset[2];
+
+//    acc[0] = accel_range_scale * acc_raw[0];
+//    acc[1] = accel_range_scale * acc_raw[1];
+//    acc[2] = accel_range_scale * acc_raw[2];
+
+//    acc[0] = (acc_raw[0] - accel_offset[0])/4096;
+//    acc[1] = (acc_raw[1] - accel_offset[1])/4096;
+//    acc[2] = (acc_raw[2] - accel_offset[2])/4096;
+
+//    acc[0] = acc_raw[0]/4096;
+//    acc[1] = acc_raw[1]/4096;
+//    acc[2] = acc_raw[2]/4096;
+
+//    acc[0] = acc_raw[0];
+//    acc[1] = acc_raw[1];
+//    acc[2] = acc_raw[2];
 
     return RT_EOK;
 }
@@ -587,7 +621,7 @@ static float MPU6500_temp_read(void)
     static int16_t raw_temp;
     static float temp;
 
-    spi_read_multi_reg8(MPU6500_spi_dev, MPU6500_TEMP_OUT_H, buffer, 2);
+    spi_read_multi_reg8(MPU6500_spi_dev, MPU6500_TEMP_OUT_H, (uint8_t *)buffer, 2);
     raw_temp = (int16_t)((buffer[0] << 8) | buffer[1]);
     if (raw_temp > 1023)
     {
@@ -603,7 +637,7 @@ static float MPU6500_temp_read(void)
  * @brief MPU6500 校准函数
  *
  * @note 定期或更换开发板时进行一次校准即可,校准成功后手动修改 GxOFFSET 等宏;
- *       通过在 menuconfig 中使能 MPU6500_CALI 进行校准;
+ *       通过在 rtconfig 中使能 MPU6500_CALI 进行校准;
  *       在串口终端可以查看校准进度,如多次校准失败,适当调大误差范围;
  *
  * @return 校准成功将校准值写入 gyro_offset
@@ -611,6 +645,8 @@ static float MPU6500_temp_read(void)
 static void MPU6500_calibrate(void){
     static float start_time;
     static uint16_t cali_times = 5000;   // 需要足够多的数据才能得到有效陀螺仪零偏校准结果
+    static uint16_t cali_useless = 0;
+//    float gNorm_standard = 9.0 ;
     float accel[3], gyro[3];
     float gyroMax[3], gyroMin[3];
     float gNormTemp, gNormMax, gNormMin;
@@ -646,6 +682,10 @@ static void MPU6500_calibrate(void){
             gNormTemp = sqrtf(accel[0] * accel[0] +
                               accel[1] * accel[1] +
                               accel[2] * accel[2]);
+//            if(gNormTemp < gNorm_standard){
+//                gNormTemp = 0;
+//                cali_useless++;
+//            }
             MPU6500_g_norm += gNormTemp;
 
             gyro_read_rad(gyro);
@@ -695,7 +735,7 @@ static void MPU6500_calibrate(void){
             dwt_delay_s(0.0005);
         }
         // 取平均值得到标定结果
-        MPU6500_g_norm /= (float)cali_times;
+        MPU6500_g_norm /= (float)cali_times ;
         LOG_W("MPU6500_g_norm: %f",MPU6500_g_norm);
         for (uint8_t i = 0; i < 3; i++)
         {
@@ -716,6 +756,52 @@ static void MPU6500_calibrate(void){
     accel_scale = 9.81f / MPU6500_g_norm;
 }
 /* -------------------------------- CALIBRATE ------------------------------- */
+
+
+/**
+ * @brief 初始化MPU6500
+ *
+ * @return rt_err_t
+ */
+static rt_err_t MPU6500_init(void)
+{
+    /* Initialize mpu6500 */
+    rt_hw_spi_device_attach(SPI_MPU6500, "MPU6500", SPI_MPU6500_CS);
+    MPU6500_spi_dev = rt_device_find("MPU6500");
+    RT_ASSERT(MPU6500_spi_dev != NULL);//指针不为空,找到spi5总线上挂载的MPU6500
+    /* config spi 配置spi参数*/
+    {
+        struct rt_spi_configuration cfg;
+        cfg.data_width = 8;
+        cfg.mode = RT_SPI_MODE_3 | RT_SPI_MSB; /* SPI Compatible Modes 3 */
+        cfg.max_hz = 7000000;
+
+        struct rt_spi_device* spi_device_t = (struct rt_spi_device*)MPU6500_spi_dev;
+        spi_device_t->config.data_width = cfg.data_width;
+        spi_device_t->config.mode = cfg.mode & RT_SPI_MODE_MASK;
+        spi_device_t->config.max_hz = cfg.max_hz;
+
+        rt_spi_configure(spi_device_t, &cfg);
+    }
+
+    MPU6500_Register_SET();
+
+
+    accel_read_offset();
+
+    gyro_offset[0] = GxOFFSET;
+    gyro_offset[1] = GyOFFSET;
+    gyro_offset[2] = GzOFFSET;
+
+    MPU6500_g_norm = gNORM;
+    accel_scale = 9.81f / MPU6500_g_norm;
+    /* calibrate */
+#ifdef BSP_MPU6500_CALI
+    MPU6500_calibrate();
+#endif /* BSP_MPU6500_CALI */
+
+    return RT_EOK;
+}
 
 
 struct imu_ops imu_ops = {
