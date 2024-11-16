@@ -15,8 +15,8 @@
 #include <rtdbg.h>
 
 /* ----------------------------- IMU_TEMPRETURE ----------------------------- */
-#define TEMP_PWM_DEV_NAME        "pwm10"        /* PWM设备名称 */
-#define TEMP_PWM_DEV_CHANNEL      1             /* PWM通道 */
+#define TEMP_PWM_DEV_NAME        "pwm3"        /* PWM设备名称 */
+#define TEMP_PWM_DEV_CHANNEL      2             /* PWM通道 */
 #define IMU_TARGET_TEMP           40            /* imu期望恒温温度 */
 
 static struct rt_device_pwm *temp_pwm_dev;      /* 温度PWM设备句柄 */
@@ -26,7 +26,7 @@ static float temp;
 static pid_obj_t *imu_temp_pid;
 // TODO:使用宏替换
 static pid_config_t imu_temp_config = {
-        .Kp = 50000, // 4.5
+        .Kp = 20000, // 4.5
         .Ki = 8000,  // 0
         .Kd = 0,  // 0
         .IntegralLimit = 50000,

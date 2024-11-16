@@ -427,7 +427,12 @@
 #define BSP_USING_PWM8_CH4
 #define BSP_USING_SPI
 #define BSP_USING_SPI5
-
+#define BSP_USING_TIM
+//#define BSP_USING_TIM1
+//#define BSP_USING_TIM2
+#define BSP_USING_TIM3      //MPU6500加热,PB5->PWM3,channel2
+//#define BSP_USING_TIM4
+git
 /* Notice: PA8 --> 8; PC9 --> 41 */
 
 /* end of On-chip Peripheral Drivers */
@@ -468,6 +473,7 @@
 #define BSP_USING_SHOOT_TASK
 #define BSP_USING_REFEREE
 //#define BSP_MPU6500_CALI         //MPU6500校准,gNom,gyro-offset
+
 /* end of RoboMaster Tasks */
 
 /* Board extended module Drivers */

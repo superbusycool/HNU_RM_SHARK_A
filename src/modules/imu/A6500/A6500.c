@@ -241,39 +241,6 @@ __attribute__((weak)) void MPU6500_acc_rotate_to_frd(float* data)
 }
 
 
-static rt_err_t accel_read_offset(){
-
-    uint8_t buffer[6];
-    int i;
-    for (i=0; i<300;i++)
-    {
-        spi_read_multi_reg8(MPU6500_spi_dev,MPU6500_XA_OFFSET_H, (uint8_t*)buffer, 6);
-
-        accel_offset[0] += (buffer[0] << 8 | buffer[1]);
-        accel_offset[1] += (buffer[2] << 8 | buffer[3]);
-        accel_offset[2] += (buffer[4] << 8 | buffer[5]);
-
-        rt_hw_us_delay(50);
-    }
-
-    accel_offset[0]= accel_offset[0]/300/4096;
-    accel_offset[1]= accel_offset[1]/300/4096;
-    accel_offset[2]= accel_offset[2]/300/4096;   //300次偏移量求平均
-
-//    accel_offset[0]= accel_offset[0]/300/32768;
-//    accel_offset[1]= accel_offset[1]/300/32768;
-//    accel_offset[2]= accel_offset[2]/300/32768;   //300次偏移量求平均
-
-//
-//    accel_offset[0]=accel_range_scale * accel_offset[0] * accel_scale;
-//    accel_offset[1]=accel_range_scale * accel_offset[1] * accel_scale;
-//    accel_offset[2]=accel_range_scale * accel_offset[2] * accel_scale;
-
-//    accel_offset[0]=accel_range_scale * accel_offset[0];
-//    accel_offset[1]=accel_range_scale * accel_offset[1];
-//    accel_offset[2]=accel_range_scale * accel_offset[2];
-
-}
 
 static rt_err_t gyro_read_raw(int16_t gyr[3])
 {
@@ -292,22 +259,13 @@ static rt_err_t gyro_read_rad(float gyr[3])
     int16_t gyr_raw[3];
 
     gyro_read_raw(gyr_raw);
-//    /* 2000dps -> rad/s */
-//    gyr[0] = gyro_range_scale * (gyr_raw[0] - gyro_offset[0]);
-//    gyr[1] = gyro_range_scale * (gyr_raw[1] - gyro_offset[1]);
-//    gyr[2] = gyro_range_scale * (gyr_raw[2] - gyro_offset[2]);
 
-//    gyr[0] =(gyr_raw[0] - gyro_offset[0])/16.384f / 57.3f;
-//    gyr[1] =(gyr_raw[1] - gyro_offset[1])/16.384f / 57.3f;
-//    gyr[2] =(gyr_raw[2] - gyro_offset[2])/16.384f / 57.3f;
 
     gyr[0] = gyro_range_scale * gyr_raw[0] - gyro_offset[0];
     gyr[1] = gyro_range_scale * gyr_raw[1] - gyro_offset[1];
     gyr[2] = gyro_range_scale * gyr_raw[2] - gyro_offset[2];
 
-//    gyr[0] =gyr_raw[0] ;
-//    gyr[1] =gyr_raw[1] ;
-//    gyr[2] =gyr_raw[2];
+
 
     return RT_EOK;
 }
@@ -502,10 +460,10 @@ static rt_err_t MPU6500_Register_SET(void)
     spi_write_reg8(MPU6500_spi_dev, MPU6500_PWR_MGMT_2, 0x00);     /* 启动Acc & Gyro */
     rt_hw_us_delay(200);
 
-    gyro_set_sample_rate(41);
+    gyro_set_sample_rate(250);
     rt_hw_us_delay(200);
 
-    gyro_set_range(1000);   /* +- 2000dps */
+    gyro_set_range(1000);   /* +- 1000dps */
     rt_hw_us_delay(200);
 
     accel_set_range(8);       /* Accel range +-8g  */
@@ -514,7 +472,7 @@ static rt_err_t MPU6500_Register_SET(void)
     MPU6500_set_sample_rate(1000);
     rt_hw_us_delay(200);
 
-    accel_set_DLPF(42);     /* Accel 低通滤波此处为20Hz */
+//    accel_set_DLPF(42);     /* Accel 低通滤波此处为20Hz */
     rt_hw_us_delay(200);
 
 
@@ -568,25 +526,6 @@ static rt_err_t accel_read_m_s2(float acc[3])
     acc[1] = accel_range_scale * acc_raw[1] * accel_scale ;
     acc[2] = accel_range_scale * acc_raw[2] * accel_scale ;
 
-//    acc[0] =  acc_raw[0]/32768  - accel_offset[0];
-//    acc[1] =  acc_raw[1]/32768  - accel_offset[1];
-//    acc[2] =  acc_raw[2]/32768  - accel_offset[2];
-
-//    acc[0] = accel_range_scale * acc_raw[0];
-//    acc[1] = accel_range_scale * acc_raw[1];
-//    acc[2] = accel_range_scale * acc_raw[2];
-
-//    acc[0] = (acc_raw[0] - accel_offset[0])/4096;
-//    acc[1] = (acc_raw[1] - accel_offset[1])/4096;
-//    acc[2] = (acc_raw[2] - accel_offset[2])/4096;
-
-//    acc[0] = acc_raw[0]/4096;
-//    acc[1] = acc_raw[1]/4096;
-//    acc[2] = acc_raw[2]/4096;
-
-//    acc[0] = acc_raw[0];
-//    acc[1] = acc_raw[1];
-//    acc[2] = acc_raw[2];
 
     return RT_EOK;
 }
@@ -682,10 +621,7 @@ static void MPU6500_calibrate(void){
             gNormTemp = sqrtf(accel[0] * accel[0] +
                               accel[1] * accel[1] +
                               accel[2] * accel[2]);
-//            if(gNormTemp < gNorm_standard){
-//                gNormTemp = 0;
-//                cali_useless++;
-//            }
+
             MPU6500_g_norm += gNormTemp;
 
             gyro_read_rad(gyro);
@@ -785,9 +721,6 @@ static rt_err_t MPU6500_init(void)
     }
 
     MPU6500_Register_SET();
-
-
-    accel_read_offset();
 
     gyro_offset[0] = GxOFFSET;
     gyro_offset[1] = GyOFFSET;
