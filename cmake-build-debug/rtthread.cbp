@@ -76,6 +76,7 @@
 					<Add directory="D:/HNU_RM_CodeStorage/HNU_A_Test_Try5/HNU_RM_SHARK_A/src/modules/imu"/>
 					<Add directory="D:/HNU_RM_CodeStorage/HNU_A_Test_Try5/HNU_RM_SHARK_A/src/modules/imu/A6500"/>
 					<Add directory="D:/HNU_RM_CodeStorage/HNU_A_Test_Try5/HNU_RM_SHARK_A/src/modules/rc/dbus"/>
+					<Add directory="D:/HNU_RM_CodeStorage/HNU_A_Test_Try5/HNU_RM_SHARK_A/src/modules/rc/keyboard"/>
 					<Add directory="D:/HNU_RM_CodeStorage/HNU_A_Test_Try5/HNU_RM_SHARK_A/src/modules/referee"/>
 					<Add directory="D:/HNU_RM_CodeStorage/HNU_A_Test_Try5/HNU_RM_SHARK_A/src/modules/referee/bsp_referee_UI"/>
 					<Add directory="D:/HNU_RM_CodeStorage/HNU_A_Test_Try5/HNU_RM_SHARK_A/src/task"/>
@@ -86,6 +87,7 @@
 					<Add directory="D:/HNU_RM_CodeStorage/HNU_A_Test_Try5/HNU_RM_SHARK_A/src/task/gimbal"/>
 					<Add directory="D:/HNU_RM_CodeStorage/HNU_A_Test_Try5/HNU_RM_SHARK_A/src/task/transmission"/>
 					<Add directory="D:/HNU_RM_CodeStorage/HNU_A_Test_Try5/HNU_RM_SHARK_A/src/task/shoot"/>
+					<Add directory="D:/HNU_RM_CodeStorage/HNU_A_Test_Try5/HNU_RM_SHARK_A/src/task/referee"/>
 					<Add directory="D:/HNU_RM_CodeStorage/HNU_A_Test_Try5/HNU_RM_SHARK_A/src"/>
 					<Add directory="D:/HNU_RM_CodeStorage/HNU_A_Test_Try5/HNU_RM_SHARK_A/rt-thread/components/utilities/ulog"/>
 					<Add directory="c:\env\env-windows\tools\gnu_gcc\arm_gcc\mingw\bin\../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/include/c++/10.3.1"/>
@@ -161,6 +163,7 @@
 					<Add directory="D:/HNU_RM_CodeStorage/HNU_A_Test_Try5/HNU_RM_SHARK_A/src/modules/imu"/>
 					<Add directory="D:/HNU_RM_CodeStorage/HNU_A_Test_Try5/HNU_RM_SHARK_A/src/modules/imu/A6500"/>
 					<Add directory="D:/HNU_RM_CodeStorage/HNU_A_Test_Try5/HNU_RM_SHARK_A/src/modules/rc/dbus"/>
+					<Add directory="D:/HNU_RM_CodeStorage/HNU_A_Test_Try5/HNU_RM_SHARK_A/src/modules/rc/keyboard"/>
 					<Add directory="D:/HNU_RM_CodeStorage/HNU_A_Test_Try5/HNU_RM_SHARK_A/src/modules/referee"/>
 					<Add directory="D:/HNU_RM_CodeStorage/HNU_A_Test_Try5/HNU_RM_SHARK_A/src/modules/referee/bsp_referee_UI"/>
 					<Add directory="D:/HNU_RM_CodeStorage/HNU_A_Test_Try5/HNU_RM_SHARK_A/src/task"/>
@@ -171,6 +174,7 @@
 					<Add directory="D:/HNU_RM_CodeStorage/HNU_A_Test_Try5/HNU_RM_SHARK_A/src/task/gimbal"/>
 					<Add directory="D:/HNU_RM_CodeStorage/HNU_A_Test_Try5/HNU_RM_SHARK_A/src/task/transmission"/>
 					<Add directory="D:/HNU_RM_CodeStorage/HNU_A_Test_Try5/HNU_RM_SHARK_A/src/task/shoot"/>
+					<Add directory="D:/HNU_RM_CodeStorage/HNU_A_Test_Try5/HNU_RM_SHARK_A/src/task/referee"/>
 					<Add directory="D:/HNU_RM_CodeStorage/HNU_A_Test_Try5/HNU_RM_SHARK_A/src"/>
 					<Add directory="D:/HNU_RM_CodeStorage/HNU_A_Test_Try5/HNU_RM_SHARK_A/rt-thread/components/utilities/ulog"/>
 					<Add directory="c:\env\env-windows\tools\gnu_gcc\arm_gcc\mingw\bin\../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/include/c++/10.3.1"/>
@@ -248,12 +252,6 @@
 			<Option target="rtthread.elf"/>
 		</Unit>
 		<Unit filename="D:/HNU_RM_CodeStorage/HNU_A_Test_Try5/HNU_RM_SHARK_A/libraries/HAL_Drivers/drv_pwm.c">
-			<Option target="rtthread.elf"/>
-		</Unit>
-		<Unit filename="D:/HNU_RM_CodeStorage/HNU_A_Test_Try5/HNU_RM_SHARK_A/libraries/HAL_Drivers/drv_sdio.c">
-			<Option target="rtthread.elf"/>
-		</Unit>
-		<Unit filename="D:/HNU_RM_CodeStorage/HNU_A_Test_Try5/HNU_RM_SHARK_A/libraries/HAL_Drivers/drv_sdio.h">
 			<Option target="rtthread.elf"/>
 		</Unit>
 		<Unit filename="D:/HNU_RM_CodeStorage/HNU_A_Test_Try5/HNU_RM_SHARK_A/libraries/HAL_Drivers/drv_soft_i2c.c">
@@ -679,6 +677,12 @@
 		<Unit filename="D:/HNU_RM_CodeStorage/HNU_A_Test_Try5/HNU_RM_SHARK_A/src/modules/rc/dbus/rc_dbus.h">
 			<Option target="rtthread.elf"/>
 		</Unit>
+		<Unit filename="D:/HNU_RM_CodeStorage/HNU_A_Test_Try5/HNU_RM_SHARK_A/src/modules/rc/keyboard/keyboard.c">
+			<Option target="rtthread.elf"/>
+		</Unit>
+		<Unit filename="D:/HNU_RM_CodeStorage/HNU_A_Test_Try5/HNU_RM_SHARK_A/src/modules/rc/keyboard/keyboard.h">
+			<Option target="rtthread.elf"/>
+		</Unit>
 		<Unit filename="D:/HNU_RM_CodeStorage/HNU_A_Test_Try5/HNU_RM_SHARK_A/src/modules/referee/Referee.c">
 			<Option target="rtthread.elf"/>
 		</Unit>
@@ -743,6 +747,12 @@
 			<Option target="rtthread.elf"/>
 		</Unit>
 		<Unit filename="D:/HNU_RM_CodeStorage/HNU_A_Test_Try5/HNU_RM_SHARK_A/src/task/motor/motor_task.h">
+			<Option target="rtthread.elf"/>
+		</Unit>
+		<Unit filename="D:/HNU_RM_CodeStorage/HNU_A_Test_Try5/HNU_RM_SHARK_A/src/task/referee/referee_task.c">
+			<Option target="rtthread.elf"/>
+		</Unit>
+		<Unit filename="D:/HNU_RM_CodeStorage/HNU_A_Test_Try5/HNU_RM_SHARK_A/src/task/referee/referee_task.h">
 			<Option target="rtthread.elf"/>
 		</Unit>
 		<Unit filename="D:/HNU_RM_CodeStorage/HNU_A_Test_Try5/HNU_RM_SHARK_A/src/task/robot.c">

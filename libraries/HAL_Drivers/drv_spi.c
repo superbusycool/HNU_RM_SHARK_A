@@ -621,33 +621,6 @@ static int rt_hw_spi_bus_init(void)
     return result;
 }
 
-/**
-  * Attach the spi device to SPI bus, this function must be used after initialization.
-  */
-rt_err_t rt_hw_spi_device_attach(const char *bus_name, const char *device_name, rt_base_t cs_pin)
-{
-    RT_ASSERT(bus_name != RT_NULL);
-    RT_ASSERT(device_name != RT_NULL);
-
-    rt_err_t result;
-    struct rt_spi_device *spi_device;
-
-    /* attach the device to spi bus*/
-    spi_device = (struct rt_spi_device *)rt_malloc(sizeof(struct rt_spi_device));
-    RT_ASSERT(spi_device != RT_NULL);
-
-    result = rt_spi_bus_attach_device_cspin(spi_device, device_name, bus_name, cs_pin, RT_NULL);
-    if (result != RT_EOK)
-    {
-        LOG_E("%s attach to %s faild, %d\n", device_name, bus_name, result);
-    }
-
-    RT_ASSERT(result == RT_EOK);
-
-    LOG_D("%s attach to %s done", device_name, bus_name);
-
-    return result;
-}
 
 #if defined(BSP_SPI1_TX_USING_DMA) || defined(BSP_SPI1_RX_USING_DMA)
 void SPI1_IRQHandler(void)
@@ -875,6 +848,34 @@ void SPI5_DMA_RX_IRQHandler(void)
     rt_interrupt_leave();
 }
 #endif
+
+/**
+  * Attach the spi device to SPI bus, this function must be used after initialization.
+  */
+rt_err_t rt_hw_spi_device_attach(const char *bus_name, const char *device_name, rt_base_t cs_pin)
+{
+    RT_ASSERT(bus_name != RT_NULL);
+    RT_ASSERT(device_name != RT_NULL);
+
+    rt_err_t result;
+    struct rt_spi_device *spi_device;
+
+    /* attach the device to spi bus*/
+    spi_device = (struct rt_spi_device *)rt_malloc(sizeof(struct rt_spi_device));
+    RT_ASSERT(spi_device != RT_NULL);
+
+    result = rt_spi_bus_attach_device_cspin(spi_device, device_name, bus_name, cs_pin, RT_NULL);
+    if (result != RT_EOK)
+    {
+        LOG_E("%s attach to %s faild, %d\n", device_name, bus_name, result);
+    }
+
+    RT_ASSERT(result == RT_EOK);
+
+    LOG_D("%s attach to %s done", device_name, bus_name);
+
+    return result;
+}
 
 #if defined(BSP_USING_SPI5) && defined(BSP_SPI5_TX_USING_DMA)
 /**

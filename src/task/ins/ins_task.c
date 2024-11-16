@@ -26,7 +26,7 @@ static float temp;
 static pid_obj_t *imu_temp_pid;
 // TODO:使用宏替换
 static pid_config_t imu_temp_config = {
-        .Kp = 20000, // 4.5
+        .Kp = 50000, // 4.5
         .Ki = 8000,  // 0
         .Kd = 0,  // 0
         .IntegralLimit = 50000,

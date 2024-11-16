@@ -41,6 +41,9 @@
 #ifdef BSP_USING_RC_DBUS
 #include "rc_dbus.h"
 #endif /* BSP_USING_RC_DBUS */
+#ifdef BSP_USING_RC_SBUS
+#include "rc_sbus.h"
+#endif /* BSP_USING_RC_sBUS */
 #ifdef BSP_USING_RC_KEYBOARD
 #include "keyboard.h"
 #endif /* BSP_USING_RC_KEYBOARD */

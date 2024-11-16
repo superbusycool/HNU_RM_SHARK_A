@@ -116,6 +116,7 @@
 #define RT_USING_PIN
 #define RT_USING_ADC
 #define RT_USING_PWM
+#define RT_USING_HWTIMER
 #define RT_USING_SDIO
 #define RT_SDIO_STACK_SIZE 512
 #define RT_SDIO_THREAD_PRIORITY 15
@@ -128,7 +129,6 @@
 #define RT_HWCRYPTO_IV_MAX_SIZE 16
 #define RT_HWCRYPTO_KEYBIT_MAX_SIZE 256
 #define RT_HWCRYPTO_USING_RNG
-#define RT_USING_HWTIMER
 
 /* Using USB */
 
@@ -387,7 +387,6 @@
 #define BSP_USING_CAN
 #define BSP_USING_CAN1
 #define BSP_USING_CAN2
-#define BSP_USING_SDIO
 #define BSP_USING_ADC
 #define BSP_USING_ADC1
 #define BSP_USING_I2C
@@ -395,16 +394,11 @@
 
 /* Notice: PE4 --> 68; PE5 --> 69 */
 
-#define BSP_I2C1_SCL_PIN GET_PIN(E,4)
-#define BSP_I2C1_SDA_PIN GET_PIN(E,5)
+#define BSP_I2C1_SCL_PIN 68
+#define BSP_I2C1_SDA_PIN 69
 #define BSP_USING_PWM
 #define BSP_USING_PWM12
 #define BSP_USING_PWM12_CH1
-#define BSP_USING_PWM3
-#define BSP_USING_PWM3_CH1
-#define BSP_USING_PWM3_CH2
-#define BSP_USING_PWM3_CH3
-#define BSP_USING_PWM3_CH4
 #define BSP_USING_PWM4
 #define BSP_USING_PWM4_CH1
 #define BSP_USING_PWM4_CH2
@@ -427,12 +421,7 @@
 #define BSP_USING_PWM8_CH4
 #define BSP_USING_SPI
 #define BSP_USING_SPI5
-#define BSP_USING_TIM
-//#define BSP_USING_TIM1
-//#define BSP_USING_TIM2
-#define BSP_USING_TIM3      //MPU6500加热,PB5->PWM3,channel2
-//#define BSP_USING_TIM4
-git
+
 /* Notice: PA8 --> 8; PC9 --> 41 */
 
 /* end of On-chip Peripheral Drivers */
@@ -446,9 +435,10 @@ git
 #define BSP_USING_MAG
 #define BSP_USING_IST8310
 #define BSP_USING_IMU
-#define BSP_USING_MPU6500
-//#define BSP_USING_RC_SBUS
 #define BSP_USING_RC_DBUS
+#define BSP_USING_REFEREE
+#define BSP_USING_RC_KEYBOARD
+#define BSP_USING_MPU6500
 /* end of RoboMaster Modules */
 
 /* RoboMaster Algorithms */
@@ -456,24 +446,21 @@ git
 #define BSP_USING_PID
 #define BSP_USING_QUATERNIONESF
 #define BSP_USING_KALMAN_FILTER
-#define BSP_USING_FILTER
 #define BSP_USING_RAMP
+#define BSP_USING_FILTER
 /* end of RoboMaster Algorithms */
 
 /* RoboMaster Tasks */
 
-#define BSP_USING_INS_TASK
 #define BSP_USING_MOTOR_TASK
 #define BSP_USING_CMD_TASK
 #define BSP_USING_CHASSIS_TASK
-//#define BSP_CHASSIS_MECANUM_MODE
 #define BSP_CHASSIS_OMNI_MODE
 #define BSP_USING_GIMBAL_TASK
 #define BSP_USING_TRANSMISSION_TASK
 #define BSP_USING_SHOOT_TASK
-#define BSP_USING_REFEREE
-//#define BSP_MPU6500_CALI         //MPU6500校准,gNom,gyro-offset
-
+#define BSP_USING_REFEREE_TASK
+#define BSP_USING_INS_TASK
 /* end of RoboMaster Tasks */
 
 /* Board extended module Drivers */

@@ -34,22 +34,6 @@
 			"value" : "C:/ENV/env-windows/tools/gnu_gcc/arm_gcc/mingw/bin/arm-none-eabi-ar.exe"
 		},
 		{
-			"name" : "CMAKE_ASM_COMPILER",
-			"properties" : 
-			[
-				{
-					"name" : "ADVANCED",
-					"value" : "1"
-				},
-				{
-					"name" : "HELPSTRING",
-					"value" : "(This variable does not exist and should not be used)"
-				}
-			],
-			"type" : "UNINITIALIZED",
-			"value" : ""
-		},
-		{
 			"name" : "CMAKE_ASM_COMPILER_AR",
 			"properties" : 
 			[
@@ -334,22 +318,6 @@
 			"value" : "C:/Program Files/JetBrains/CLion 2023.2.2/bin/cmake/win/x64/bin/ctest.exe"
 		},
 		{
-			"name" : "CMAKE_CXX_COMPILER",
-			"properties" : 
-			[
-				{
-					"name" : "ADVANCED",
-					"value" : "1"
-				},
-				{
-					"name" : "HELPSTRING",
-					"value" : "(This variable does not exist and should not be used)"
-				}
-			],
-			"type" : "UNINITIALIZED",
-			"value" : ""
-		},
-		{
 			"name" : "CMAKE_CXX_COMPILER_AR",
 			"properties" : 
 			[
@@ -460,22 +428,6 @@
 			],
 			"type" : "STRING",
 			"value" : "-O2 -g -DNDEBUG"
-		},
-		{
-			"name" : "CMAKE_C_COMPILER",
-			"properties" : 
-			[
-				{
-					"name" : "ADVANCED",
-					"value" : "1"
-				},
-				{
-					"name" : "HELPSTRING",
-					"value" : "(This variable does not exist and should not be used)"
-				}
-			],
-			"type" : "UNINITIALIZED",
-			"value" : ""
 		},
 		{
 			"name" : "CMAKE_C_COMPILER_AR",

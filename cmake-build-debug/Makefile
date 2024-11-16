@@ -344,30 +344,6 @@ libraries/HAL_Drivers/drv_pwm.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\rtthread.elf.dir\build.make CMakeFiles/rtthread.elf.dir/libraries/HAL_Drivers/drv_pwm.c.s
 .PHONY : libraries/HAL_Drivers/drv_pwm.c.s
 
-libraries/HAL_Drivers/drv_sdio.obj: libraries/HAL_Drivers/drv_sdio.c.obj
-.PHONY : libraries/HAL_Drivers/drv_sdio.obj
-
-# target to build an object file
-libraries/HAL_Drivers/drv_sdio.c.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\rtthread.elf.dir\build.make CMakeFiles/rtthread.elf.dir/libraries/HAL_Drivers/drv_sdio.c.obj
-.PHONY : libraries/HAL_Drivers/drv_sdio.c.obj
-
-libraries/HAL_Drivers/drv_sdio.i: libraries/HAL_Drivers/drv_sdio.c.i
-.PHONY : libraries/HAL_Drivers/drv_sdio.i
-
-# target to preprocess a source file
-libraries/HAL_Drivers/drv_sdio.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\rtthread.elf.dir\build.make CMakeFiles/rtthread.elf.dir/libraries/HAL_Drivers/drv_sdio.c.i
-.PHONY : libraries/HAL_Drivers/drv_sdio.c.i
-
-libraries/HAL_Drivers/drv_sdio.s: libraries/HAL_Drivers/drv_sdio.c.s
-.PHONY : libraries/HAL_Drivers/drv_sdio.s
-
-# target to generate assembly for a file
-libraries/HAL_Drivers/drv_sdio.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\rtthread.elf.dir\build.make CMakeFiles/rtthread.elf.dir/libraries/HAL_Drivers/drv_sdio.c.s
-.PHONY : libraries/HAL_Drivers/drv_sdio.c.s
-
 libraries/HAL_Drivers/drv_soft_i2c.obj: libraries/HAL_Drivers/drv_soft_i2c.c.obj
 .PHONY : libraries/HAL_Drivers/drv_soft_i2c.obj
 
@@ -3072,6 +3048,30 @@ src/modules/rc/dbus/rc_dbus.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\rtthread.elf.dir\build.make CMakeFiles/rtthread.elf.dir/src/modules/rc/dbus/rc_dbus.c.s
 .PHONY : src/modules/rc/dbus/rc_dbus.c.s
 
+src/modules/rc/keyboard/keyboard.obj: src/modules/rc/keyboard/keyboard.c.obj
+.PHONY : src/modules/rc/keyboard/keyboard.obj
+
+# target to build an object file
+src/modules/rc/keyboard/keyboard.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\rtthread.elf.dir\build.make CMakeFiles/rtthread.elf.dir/src/modules/rc/keyboard/keyboard.c.obj
+.PHONY : src/modules/rc/keyboard/keyboard.c.obj
+
+src/modules/rc/keyboard/keyboard.i: src/modules/rc/keyboard/keyboard.c.i
+.PHONY : src/modules/rc/keyboard/keyboard.i
+
+# target to preprocess a source file
+src/modules/rc/keyboard/keyboard.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\rtthread.elf.dir\build.make CMakeFiles/rtthread.elf.dir/src/modules/rc/keyboard/keyboard.c.i
+.PHONY : src/modules/rc/keyboard/keyboard.c.i
+
+src/modules/rc/keyboard/keyboard.s: src/modules/rc/keyboard/keyboard.c.s
+.PHONY : src/modules/rc/keyboard/keyboard.s
+
+# target to generate assembly for a file
+src/modules/rc/keyboard/keyboard.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\rtthread.elf.dir\build.make CMakeFiles/rtthread.elf.dir/src/modules/rc/keyboard/keyboard.c.s
+.PHONY : src/modules/rc/keyboard/keyboard.c.s
+
 src/modules/referee/Referee.obj: src/modules/referee/Referee.c.obj
 .PHONY : src/modules/referee/Referee.obj
 
@@ -3336,6 +3336,30 @@ src/task/motor/motor_task.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\rtthread.elf.dir\build.make CMakeFiles/rtthread.elf.dir/src/task/motor/motor_task.c.s
 .PHONY : src/task/motor/motor_task.c.s
 
+src/task/referee/referee_task.obj: src/task/referee/referee_task.c.obj
+.PHONY : src/task/referee/referee_task.obj
+
+# target to build an object file
+src/task/referee/referee_task.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\rtthread.elf.dir\build.make CMakeFiles/rtthread.elf.dir/src/task/referee/referee_task.c.obj
+.PHONY : src/task/referee/referee_task.c.obj
+
+src/task/referee/referee_task.i: src/task/referee/referee_task.c.i
+.PHONY : src/task/referee/referee_task.i
+
+# target to preprocess a source file
+src/task/referee/referee_task.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\rtthread.elf.dir\build.make CMakeFiles/rtthread.elf.dir/src/task/referee/referee_task.c.i
+.PHONY : src/task/referee/referee_task.c.i
+
+src/task/referee/referee_task.s: src/task/referee/referee_task.c.s
+.PHONY : src/task/referee/referee_task.s
+
+# target to generate assembly for a file
+src/task/referee/referee_task.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\rtthread.elf.dir\build.make CMakeFiles/rtthread.elf.dir/src/task/referee/referee_task.c.s
+.PHONY : src/task/referee/referee_task.c.s
+
 src/task/robot.obj: src/task/robot.c.obj
 .PHONY : src/task/robot.obj
 
@@ -3444,9 +3468,6 @@ help:
 	@echo ... libraries/HAL_Drivers/drv_pwm.obj
 	@echo ... libraries/HAL_Drivers/drv_pwm.i
 	@echo ... libraries/HAL_Drivers/drv_pwm.s
-	@echo ... libraries/HAL_Drivers/drv_sdio.obj
-	@echo ... libraries/HAL_Drivers/drv_sdio.i
-	@echo ... libraries/HAL_Drivers/drv_sdio.s
 	@echo ... libraries/HAL_Drivers/drv_soft_i2c.obj
 	@echo ... libraries/HAL_Drivers/drv_soft_i2c.i
 	@echo ... libraries/HAL_Drivers/drv_soft_i2c.s
@@ -3785,6 +3806,9 @@ help:
 	@echo ... src/modules/rc/dbus/rc_dbus.obj
 	@echo ... src/modules/rc/dbus/rc_dbus.i
 	@echo ... src/modules/rc/dbus/rc_dbus.s
+	@echo ... src/modules/rc/keyboard/keyboard.obj
+	@echo ... src/modules/rc/keyboard/keyboard.i
+	@echo ... src/modules/rc/keyboard/keyboard.s
 	@echo ... src/modules/referee/Referee.obj
 	@echo ... src/modules/referee/Referee.i
 	@echo ... src/modules/referee/Referee.s
@@ -3818,6 +3842,9 @@ help:
 	@echo ... src/task/motor/motor_task.obj
 	@echo ... src/task/motor/motor_task.i
 	@echo ... src/task/motor/motor_task.s
+	@echo ... src/task/referee/referee_task.obj
+	@echo ... src/task/referee/referee_task.i
+	@echo ... src/task/referee/referee_task.s
 	@echo ... src/task/robot.obj
 	@echo ... src/task/robot.i
 	@echo ... src/task/robot.s

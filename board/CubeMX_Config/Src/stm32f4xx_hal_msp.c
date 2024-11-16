@@ -267,91 +267,6 @@ void HAL_CAN_MspDeInit(CAN_HandleTypeDef* hcan)
 }
 
 /**
-* @brief SD MSP Initialization
-* This function configures the hardware resources used in this example
-* @param hsd: SD handle pointer
-* @retval None
-*/
-void HAL_SD_MspInit(SD_HandleTypeDef* hsd)
-{
-  GPIO_InitTypeDef GPIO_InitStruct = {0};
-  if(hsd->Instance==SDIO)
-  {
-  /* USER CODE BEGIN SDIO_MspInit 0 */
-
-  /* USER CODE END SDIO_MspInit 0 */
-    /* Peripheral clock enable */
-    __HAL_RCC_SDIO_CLK_ENABLE();
-
-    __HAL_RCC_GPIOC_CLK_ENABLE();
-    __HAL_RCC_GPIOD_CLK_ENABLE();
-    /**SDIO GPIO Configuration
-    PC12     ------> SDIO_CK
-    PC11     ------> SDIO_D3
-    PC10     ------> SDIO_D2
-    PD2     ------> SDIO_CMD
-    PC9     ------> SDIO_D1
-    PC8     ------> SDIO_D0
-    */
-    GPIO_InitStruct.Pin = GPIO_PIN_12|GPIO_PIN_11|GPIO_PIN_10|GPIO_PIN_9
-                          |GPIO_PIN_8;
-    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-    GPIO_InitStruct.Pull = GPIO_NOPULL;
-    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
-    GPIO_InitStruct.Alternate = GPIO_AF12_SDIO;
-    HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
-
-    GPIO_InitStruct.Pin = GPIO_PIN_2;
-    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-    GPIO_InitStruct.Pull = GPIO_NOPULL;
-    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
-    GPIO_InitStruct.Alternate = GPIO_AF12_SDIO;
-    HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
-
-  /* USER CODE BEGIN SDIO_MspInit 1 */
-
-  /* USER CODE END SDIO_MspInit 1 */
-  }
-
-}
-
-/**
-* @brief SD MSP De-Initialization
-* This function freeze the hardware resources used in this example
-* @param hsd: SD handle pointer
-* @retval None
-*/
-void HAL_SD_MspDeInit(SD_HandleTypeDef* hsd)
-{
-  if(hsd->Instance==SDIO)
-  {
-  /* USER CODE BEGIN SDIO_MspDeInit 0 */
-
-  /* USER CODE END SDIO_MspDeInit 0 */
-    /* Peripheral clock disable */
-    __HAL_RCC_SDIO_CLK_DISABLE();
-
-    /**SDIO GPIO Configuration
-    PC12     ------> SDIO_CK
-    PC11     ------> SDIO_D3
-    PC10     ------> SDIO_D2
-    PD2     ------> SDIO_CMD
-    PC9     ------> SDIO_D1
-    PC8     ------> SDIO_D0
-    */
-    HAL_GPIO_DeInit(GPIOC, GPIO_PIN_12|GPIO_PIN_11|GPIO_PIN_10|GPIO_PIN_9
-                          |GPIO_PIN_8);
-
-    HAL_GPIO_DeInit(GPIOD, GPIO_PIN_2);
-
-  /* USER CODE BEGIN SDIO_MspDeInit 1 */
-
-  /* USER CODE END SDIO_MspDeInit 1 */
-  }
-
-}
-
-/**
 * @brief SPI MSP Initialization
 * This function configures the hardware resources used in this example
 * @param hspi: SPI handle pointer
@@ -755,30 +670,6 @@ void HAL_UART_MspInit(UART_HandleTypeDef* huart)
 
   /* USER CODE END UART7_MspInit 1 */
   }
-  else if(huart->Instance==UART8)
-  {
-  /* USER CODE BEGIN UART8_MspInit 0 */
-
-  /* USER CODE END UART8_MspInit 0 */
-    /* Peripheral clock enable */
-    __HAL_RCC_UART8_CLK_ENABLE();
-
-    __HAL_RCC_GPIOE_CLK_ENABLE();
-    /**UART8 GPIO Configuration
-    PE1     ------> UART8_TX
-    PE0     ------> UART8_RX
-    */
-    GPIO_InitStruct.Pin = GPIO_PIN_1|GPIO_PIN_0;
-    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-    GPIO_InitStruct.Pull = GPIO_PULLUP;
-    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
-    GPIO_InitStruct.Alternate = GPIO_AF8_UART8;
-    HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
-
-  /* USER CODE BEGIN UART8_MspInit 1 */
-
-  /* USER CODE END UART8_MspInit 1 */
-  }
   else if(huart->Instance==USART1)
   {
   /* USER CODE BEGIN USART1_MspInit 0 */
@@ -885,24 +776,6 @@ void HAL_UART_MspDeInit(UART_HandleTypeDef* huart)
   /* USER CODE BEGIN UART7_MspDeInit 1 */
 
   /* USER CODE END UART7_MspDeInit 1 */
-  }
-  else if(huart->Instance==UART8)
-  {
-  /* USER CODE BEGIN UART8_MspDeInit 0 */
-
-  /* USER CODE END UART8_MspDeInit 0 */
-    /* Peripheral clock disable */
-    __HAL_RCC_UART8_CLK_DISABLE();
-
-    /**UART8 GPIO Configuration
-    PE1     ------> UART8_TX
-    PE0     ------> UART8_RX
-    */
-    HAL_GPIO_DeInit(GPIOE, GPIO_PIN_1|GPIO_PIN_0);
-
-  /* USER CODE BEGIN UART8_MspDeInit 1 */
-
-  /* USER CODE END UART8_MspDeInit 1 */
   }
   else if(huart->Instance==USART1)
   {

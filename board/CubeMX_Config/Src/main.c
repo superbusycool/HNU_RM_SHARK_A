@@ -46,8 +46,6 @@ ADC_HandleTypeDef hadc1;
 CAN_HandleTypeDef hcan1;
 CAN_HandleTypeDef hcan2;
 
-SD_HandleTypeDef hsd;
-
 SPI_HandleTypeDef hspi5;
 
 TIM_HandleTypeDef htim2;
@@ -58,7 +56,6 @@ TIM_HandleTypeDef htim8;
 TIM_HandleTypeDef htim12;
 
 UART_HandleTypeDef huart7;
-UART_HandleTypeDef huart8;
 UART_HandleTypeDef huart1;
 UART_HandleTypeDef huart3;
 UART_HandleTypeDef huart6;
@@ -77,10 +74,8 @@ static void MX_TIM4_Init(void);
 static void MX_TIM5_Init(void);
 static void MX_TIM12_Init(void);
 static void MX_UART7_Init(void);
-static void MX_UART8_Init(void);
 static void MX_USART1_UART_Init(void);
 static void MX_USART3_UART_Init(void);
-static void MX_SDIO_SD_Init(void);
 static void MX_ADC1_Init(void);
 static void MX_SPI5_Init(void);
 static void MX_TIM8_Init(void);
@@ -130,10 +125,8 @@ int main(void)
   MX_TIM5_Init();
   MX_TIM12_Init();
   MX_UART7_Init();
-  MX_UART8_Init();
   MX_USART1_UART_Init();
   MX_USART3_UART_Init();
-  MX_SDIO_SD_Init();
   MX_ADC1_Init();
   MX_SPI5_Init();
   MX_TIM8_Init();
@@ -323,42 +316,6 @@ static void MX_CAN2_Init(void)
   /* USER CODE BEGIN CAN2_Init 2 */
 
   /* USER CODE END CAN2_Init 2 */
-
-}
-
-/**
-  * @brief SDIO Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_SDIO_SD_Init(void)
-{
-
-  /* USER CODE BEGIN SDIO_Init 0 */
-
-  /* USER CODE END SDIO_Init 0 */
-
-  /* USER CODE BEGIN SDIO_Init 1 */
-
-  /* USER CODE END SDIO_Init 1 */
-  hsd.Instance = SDIO;
-  hsd.Init.ClockEdge = SDIO_CLOCK_EDGE_RISING;
-  hsd.Init.ClockBypass = SDIO_CLOCK_BYPASS_DISABLE;
-  hsd.Init.ClockPowerSave = SDIO_CLOCK_POWER_SAVE_DISABLE;
-  hsd.Init.BusWide = SDIO_BUS_WIDE_1B;
-  hsd.Init.HardwareFlowControl = SDIO_HARDWARE_FLOW_CONTROL_DISABLE;
-  hsd.Init.ClockDiv = 0;
-  if (HAL_SD_Init(&hsd) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  if (HAL_SD_ConfigWideBusOperation(&hsd, SDIO_BUS_WIDE_4B) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /* USER CODE BEGIN SDIO_Init 2 */
-
-  /* USER CODE END SDIO_Init 2 */
 
 }
 
@@ -845,39 +802,6 @@ static void MX_UART7_Init(void)
 }
 
 /**
-  * @brief UART8 Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_UART8_Init(void)
-{
-
-  /* USER CODE BEGIN UART8_Init 0 */
-
-  /* USER CODE END UART8_Init 0 */
-
-  /* USER CODE BEGIN UART8_Init 1 */
-
-  /* USER CODE END UART8_Init 1 */
-  huart8.Instance = UART8;
-  huart8.Init.BaudRate = 115200;
-  huart8.Init.WordLength = UART_WORDLENGTH_8B;
-  huart8.Init.StopBits = UART_STOPBITS_1;
-  huart8.Init.Parity = UART_PARITY_NONE;
-  huart8.Init.Mode = UART_MODE_TX_RX;
-  huart8.Init.HwFlowCtl = UART_HWCONTROL_NONE;
-  huart8.Init.OverSampling = UART_OVERSAMPLING_16;
-  if (HAL_UART_Init(&huart8) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /* USER CODE BEGIN UART8_Init 2 */
-
-  /* USER CODE END UART8_Init 2 */
-
-}
-
-/**
   * @brief USART1 Initialization Function
   * @param None
   * @retval None
@@ -989,7 +913,6 @@ static void MX_GPIO_Init(void)
   __HAL_RCC_GPIOE_CLK_ENABLE();
   __HAL_RCC_GPIOB_CLK_ENABLE();
   __HAL_RCC_GPIOG_CLK_ENABLE();
-  __HAL_RCC_GPIOC_CLK_ENABLE();
   __HAL_RCC_GPIOA_CLK_ENABLE();
   __HAL_RCC_GPIOD_CLK_ENABLE();
   __HAL_RCC_GPIOI_CLK_ENABLE();
@@ -1001,6 +924,14 @@ static void MX_GPIO_Init(void)
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(LED_RED_GPIO_Port, LED_RED_Pin, GPIO_PIN_RESET);
+
+  /*Configure GPIO pins : PE1 PE0 */
+  GPIO_InitStruct.Pin = GPIO_PIN_1|GPIO_PIN_0;
+  GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+  GPIO_InitStruct.Alternate = GPIO_AF8_UART8;
+  HAL_GPIO_Init(GPIOE, &GPIO_InitStruct);
 
   /*Configure GPIO pins : PF6 LED_GREEN_Pin */
   GPIO_InitStruct.Pin = GPIO_PIN_6|LED_GREEN_Pin;
