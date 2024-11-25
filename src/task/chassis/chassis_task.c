@@ -42,7 +42,6 @@ static int16_t motor_ref[4]; // 电机控制期望值
 
 static void chassis_motor_init();
 /*定时器初始化*/
-static int TIM_Init(void);
 /*里程计所需数据*/
 static float x_ch, y_ch, w_ch, x_gim, y_gim,vw_ch,vy_ch,vx_ch,vx_gim,vy_gim,x_sin_w,x_cos_w,y_sin_w,y_cos_w;
 /* --------------------------------- 底盘运动学解算 --------------------------------- */
@@ -79,14 +78,13 @@ void chassis_thread_entry(void *argument)
     chassis_pub_init();
     chassis_sub_init();
     chassis_motor_init();
-    TIM_Init();
 
     LOG_I("Chassis Task Start");
     for (;;)
     {
         cmd_start = dwt_get_time_ms();
         /* 计算实际速度 */
-        omni_calc(&chassis_cmd,out_speed_OMI);
+        //omni_calc(&chassis_cmd,out_speed_OMI);
         /* 更新该线程所有的订阅者 */
         chassis_sub_pull();
 
@@ -187,24 +185,6 @@ static rt_int16_t motor_control_0(dji_motor_measure_t measure)
     static int16_t chassis_max_current=0;
     static int16_t chassis_power_limit=0;
     /*传参给局部变量防止被更改抽风*/
-    chassis_power_limit=(int16_t)referee_fdb.robot_status.chassis_power_limit;
-    /*底盘功率限制防止buffer溢出*/
-    if(chassis_power_limit>=120)
-    {
-        chassis_power_limit=120;
-    }
-    if(referee_fdb.power_heat_data.buffer_energy<20)
-    {
-        chassis_max_current=chassis_power_limit*CURRENT_POWER_LIMIT_RATE*(referee_fdb.power_heat_data.buffer_energy/50);
-    }
-    else
-    {
-        chassis_max_current=chassis_power_limit*CURRENT_POWER_LIMIT_RATE;
-    }
-    if (chassis_power_limit==0)
-    {
-        chassis_max_current=8000;
-    }
     set =(rt_int16_t) pid_calculate(chassis_controller[0].speed_pid, measure.speed_rpm, motor_ref[0]);
     VAL_LIMIT(set , -chassis_max_current, chassis_max_current);
     return set;
@@ -216,24 +196,6 @@ static rt_int16_t motor_control_1(dji_motor_measure_t measure)
     static int16_t chassis_max_current=0;
     static int16_t chassis_power_limit=0;
     /*传参给局部变量防止被更改抽风*/
-    chassis_power_limit=(int16_t)referee_fdb.robot_status.chassis_power_limit;
-    /*底盘功率限制防止buffer溢出*/
-    if(chassis_power_limit>=120)
-    {
-        chassis_power_limit=120;
-    }
-    if(referee_fdb.power_heat_data.buffer_energy<20)
-    {
-        chassis_max_current=chassis_power_limit*CURRENT_POWER_LIMIT_RATE*(referee_fdb.power_heat_data.buffer_energy/50);
-    }
-    else
-    {
-        chassis_max_current=chassis_power_limit*CURRENT_POWER_LIMIT_RATE;
-    }
-    if (chassis_power_limit==0)
-    {
-        chassis_max_current=8000;
-    }
     set =(rt_int16_t) pid_calculate(chassis_controller[1].speed_pid, measure.speed_rpm, motor_ref[1]);
     VAL_LIMIT(set , -chassis_max_current, chassis_max_current);
     return set;
@@ -245,24 +207,6 @@ static rt_int16_t motor_control_2(dji_motor_measure_t measure)
     static int16_t chassis_max_current=0;
     static int16_t chassis_power_limit=0;
     /*传参给局部变量防止被更改抽风*/
-    chassis_power_limit=(int16_t)referee_fdb.robot_status.chassis_power_limit;
-    /*底盘功率限制防止buffer溢出*/
-    if(chassis_power_limit>=120)
-    {
-        chassis_power_limit=120;
-    }
-    if(referee_fdb.power_heat_data.buffer_energy<20)
-    {
-        chassis_max_current=chassis_power_limit*CURRENT_POWER_LIMIT_RATE*(referee_fdb.power_heat_data.buffer_energy/50);
-    }
-    else
-    {
-        chassis_max_current=chassis_power_limit*CURRENT_POWER_LIMIT_RATE;
-    }
-    if (chassis_power_limit==0)
-    {
-        chassis_max_current=8000;
-    }
     set =(rt_int16_t) pid_calculate(chassis_controller[2].speed_pid, measure.speed_rpm, motor_ref[2]);
     VAL_LIMIT(set , -chassis_max_current, chassis_max_current);
     return set;
@@ -273,25 +217,6 @@ static rt_int16_t motor_control_3(dji_motor_measure_t measure)
     static rt_int16_t set = 0;
     static int16_t chassis_max_current=0;
     static int16_t chassis_power_limit=0;
-    /*传参给局部变量防止被更改抽风*/
-    chassis_power_limit=(int16_t)referee_fdb.robot_status.chassis_power_limit;
-    /*底盘功率限制防止buffer溢出*/
-    if(chassis_power_limit>=120)
-    {
-        chassis_power_limit=120;
-    }
-    if(referee_fdb.power_heat_data.buffer_energy<20)
-    {
-        chassis_max_current=chassis_power_limit*CURRENT_POWER_LIMIT_RATE*(referee_fdb.power_heat_data.buffer_energy/50);
-    }
-    else
-    {
-        chassis_max_current=chassis_power_limit*CURRENT_POWER_LIMIT_RATE;
-    }
-    if (chassis_power_limit==0)
-    {
-        chassis_max_current=8000;
-    }
     set =(rt_int16_t) pid_calculate(chassis_controller[3].speed_pid, measure.speed_rpm, motor_ref[3]);
     VAL_LIMIT(set , -chassis_max_current, chassis_max_current);
     return set;
@@ -406,50 +331,50 @@ static rt_err_t timeout_cb(rt_device_t dev, rt_size_t size)
     return 0;
 }
 
-int TIM_Init(void)
-{
-    rt_err_t ret = RT_EOK;
-    rt_hwtimerval_t timeout_s;      /* 定时器超时值 */
-    rt_device_t hw_dev = RT_NULL;   /* 定时器设备句柄 */
-    rt_hwtimer_mode_t mode;         /* 定时器模式 */
-    rt_uint32_t freq = 10000;               /* 计数频率 */
-
-    /* 查找定时器设备 */
-    hw_dev = rt_device_find("timer4" );
-    if (hw_dev == RT_NULL)
-    {
-        rt_kprintf("hwtimer sample run failed! can't find %s device!\n", HWTIMER_DEV_NAME);
-        return RT_ERROR;
-    }
-
-    /* 以读写方式打开设备 */
-    ret = rt_device_open(hw_dev, RT_DEVICE_OFLAG_RDWR);
-    if (ret != RT_EOK)
-    {
-        rt_kprintf("open %s device failed!\n", HWTIMER_DEV_NAME);
-        return ret;
-    }
-
-    /* 设置超时回调函数 */
-    rt_device_set_rx_indicate(hw_dev, timeout_cb);
-
-    rt_device_control(hw_dev, HWTIMER_CTRL_FREQ_SET, &freq);
-    mode = HWTIMER_MODE_PERIOD;
-    ret = rt_device_control(hw_dev, HWTIMER_CTRL_MODE_SET, &mode);
-    if (ret != RT_EOK)
-    {
-        rt_kprintf("set mode failed! ret is :%d\n", ret);
-        return ret;
-    }
-
-    timeout_s.sec = 0;      /* 秒 */
-    timeout_s.usec = 1000;     /* 微秒 */
-    if (rt_device_write(hw_dev, 0, &timeout_s, sizeof(timeout_s)) != sizeof(timeout_s))
-    {
-        rt_kprintf("set timeout value failed\n");
-        return RT_ERROR;
-    }
-}
+//int TIM_Init(void)
+//{
+//    rt_err_t ret = RT_EOK;
+//    rt_hwtimerval_t timeout_s;      /* 定时器超时值 */
+//    rt_device_t hw_dev = RT_NULL;   /* 定时器设备句柄 */
+//    rt_hwtimer_mode_t mode;         /* 定时器模式 */
+//    rt_uint32_t freq = 10000;               /* 计数频率 */
+//
+//    /* 查找定时器设备 */
+//    hw_dev = rt_device_find("timer4" );
+//    if (hw_dev == RT_NULL)
+//    {
+//        rt_kprintf("hwtimer sample run failed! can't find %s device!\n", HWTIMER_DEV_NAME);
+//        return RT_ERROR;
+//    }
+//
+//    /* 以读写方式打开设备 */
+//    ret = rt_device_open(hw_dev, RT_DEVICE_OFLAG_RDWR);
+//    if (ret != RT_EOK)
+//    {
+//        rt_kprintf("open %s device failed!\n", HWTIMER_DEV_NAME);
+//        return ret;
+//    }
+//
+//    /* 设置超时回调函数 */
+//    rt_device_set_rx_indicate(hw_dev, timeout_cb);
+//
+//    rt_device_control(hw_dev, HWTIMER_CTRL_FREQ_SET, &freq);
+//    mode = HWTIMER_MODE_PERIOD;
+//    ret = rt_device_control(hw_dev, HWTIMER_CTRL_MODE_SET, &mode);
+//    if (ret != RT_EOK)
+//    {
+//        rt_kprintf("set mode failed! ret is :%d\n", ret);
+//        return ret;
+//    }
+//
+//    timeout_s.sec = 0;      /* 秒 */
+//    timeout_s.usec = 1000;     /* 微秒 */
+//    if (rt_device_write(hw_dev, 0, &timeout_s, sizeof(timeout_s)) != sizeof(timeout_s))
+//    {
+//        rt_kprintf("set timeout value failed\n");
+//        return RT_ERROR;
+//    }
+//}
 
 static struct chassis_real_speed_t omni_get_speed(dji_motor_object_t *chassis_motor[4])//里程计计算函数。
 {

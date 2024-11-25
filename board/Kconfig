@@ -210,6 +210,24 @@ menu "On-chip Peripheral Drivers"
                         default n
                 endif
 
+            menuconfig BSP_USING_PWM3
+                bool "Enable timer3 output PWM"
+                default n
+                if BSP_USING_PWM3
+                    config BSP_USING_PWM3_CH1
+                        bool "Enable PWM3 channel1"
+                        default n
+                    config BSP_USING_PWM3_CH2
+                        bool "Enable PWM3 channel2"
+                        default n
+                    config BSP_USING_PWM3_CH3
+                        bool "Enable PWM3 channel3"
+                        default n
+                    config BSP_USING_PWM3_CH4
+                        bool "Enable PWM3 channel4"
+                        default n
+                endif
+
             menuconfig BSP_USING_PWM2
                 bool "Enable timer2 output PWM"
                 default n
@@ -293,6 +311,21 @@ menu "On-chip Peripheral Drivers"
                 depends on BSP_USING_SPI2
                 select BSP_SPI2_TX_USING_DMA
                 default n
+
+            config BSP_USING_SPI5
+                bool "Enable SPI5 BUS"
+                default n
+
+            config BSP_SPI5_TX_USING_DMA
+                bool "Enable SPI5 TX DMA"
+                depends on BSP_USING_SPI5
+                default n
+
+            config BSP_SPI5_RX_USING_DMA
+                bool "Enable SPI5 RX DMA"
+                depends on BSP_USING_SPI5
+                select BSP_SPI5_TX_USING_DMA
+                default n
         endif
 
     menuconfig BSP_USING_I2C1
@@ -345,19 +378,23 @@ menu "RoboMaster Modules"
         bool "Enable IMU"
         default y
         if BSP_USING_IMU
-            config BSP_USING_BMI088
-                bool "Using BMI088"
+            config BSP_USING_MPU6500
+                bool "Using MPU6500"
                 default y
-                if BSP_USING_BMI088
-                    config BSP_BMI088_CALI
-                    bool "Calibrate BMI088 (Get more info in BMI088 README)"
-                    default n
-                endif
         endif
 
     config BSP_USING_RC_SBUS
         bool "Enable RC SBUS"
         default y
+
+    menuconfig BSP_USING_RC_DBUS
+        bool "Enable RC DBUS"
+        default n
+        if BSP_USING_RC_DBUS
+            config BSP_USING_RC_KEYBOARD
+                bool "Using KEYBOARD"
+                default n
+        endif
 
 endmenu
 
@@ -420,6 +457,11 @@ menu "RoboMaster Tasks"
     config BSP_USING_SHOOT_TASK
         bool "Select USING Shoot Task"
         default y
+
+    config BSP_USING_REFEREE_TASK
+        bool "Select USING Referee Task"
+        default y
+
 endmenu
 
 menu "Board extended module Drivers"

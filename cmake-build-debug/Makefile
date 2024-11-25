@@ -56,10 +56,10 @@ RM = "C:\Program Files\JetBrains\CLion 2023.2.2\bin\cmake\win\x64\bin\cmake.exe"
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = D:\HNU_RM_CodeStorage\HNU_A_Test_Try5\HNU_RM_SHARK_A
+CMAKE_SOURCE_DIR = D:\HNU_RM_CodeStorage\HNU_A_Youstar\HNU_RM_SHARK_A\HNU_RM_SHARK_A
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = D:\HNU_RM_CodeStorage\HNU_A_Test_Try5\HNU_RM_SHARK_A\cmake-build-debug
+CMAKE_BINARY_DIR = D:\HNU_RM_CodeStorage\HNU_A_Youstar\HNU_RM_SHARK_A\HNU_RM_SHARK_A\cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -86,9 +86,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start D:\HNU_RM_CodeStorage\HNU_A_Test_Try5\HNU_RM_SHARK_A\cmake-build-debug\CMakeFiles D:\HNU_RM_CodeStorage\HNU_A_Test_Try5\HNU_RM_SHARK_A\cmake-build-debug\\CMakeFiles\progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start D:\HNU_RM_CodeStorage\HNU_A_Youstar\HNU_RM_SHARK_A\HNU_RM_SHARK_A\cmake-build-debug\CMakeFiles D:\HNU_RM_CodeStorage\HNU_A_Youstar\HNU_RM_SHARK_A\HNU_RM_SHARK_A\cmake-build-debug\\CMakeFiles\progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start D:\HNU_RM_CodeStorage\HNU_A_Test_Try5\HNU_RM_SHARK_A\cmake-build-debug\CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start D:\HNU_RM_CodeStorage\HNU_A_Youstar\HNU_RM_SHARK_A\HNU_RM_SHARK_A\cmake-build-debug\CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -320,30 +320,6 @@ libraries/HAL_Drivers/drv_gpio.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\rtthread.elf.dir\build.make CMakeFiles/rtthread.elf.dir/libraries/HAL_Drivers/drv_gpio.c.s
 .PHONY : libraries/HAL_Drivers/drv_gpio.c.s
 
-libraries/HAL_Drivers/drv_pwm.obj: libraries/HAL_Drivers/drv_pwm.c.obj
-.PHONY : libraries/HAL_Drivers/drv_pwm.obj
-
-# target to build an object file
-libraries/HAL_Drivers/drv_pwm.c.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\rtthread.elf.dir\build.make CMakeFiles/rtthread.elf.dir/libraries/HAL_Drivers/drv_pwm.c.obj
-.PHONY : libraries/HAL_Drivers/drv_pwm.c.obj
-
-libraries/HAL_Drivers/drv_pwm.i: libraries/HAL_Drivers/drv_pwm.c.i
-.PHONY : libraries/HAL_Drivers/drv_pwm.i
-
-# target to preprocess a source file
-libraries/HAL_Drivers/drv_pwm.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\rtthread.elf.dir\build.make CMakeFiles/rtthread.elf.dir/libraries/HAL_Drivers/drv_pwm.c.i
-.PHONY : libraries/HAL_Drivers/drv_pwm.c.i
-
-libraries/HAL_Drivers/drv_pwm.s: libraries/HAL_Drivers/drv_pwm.c.s
-.PHONY : libraries/HAL_Drivers/drv_pwm.s
-
-# target to generate assembly for a file
-libraries/HAL_Drivers/drv_pwm.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\rtthread.elf.dir\build.make CMakeFiles/rtthread.elf.dir/libraries/HAL_Drivers/drv_pwm.c.s
-.PHONY : libraries/HAL_Drivers/drv_pwm.c.s
-
 libraries/HAL_Drivers/drv_soft_i2c.obj: libraries/HAL_Drivers/drv_soft_i2c.c.obj
 .PHONY : libraries/HAL_Drivers/drv_soft_i2c.obj
 
@@ -391,30 +367,6 @@ libraries/HAL_Drivers/drv_spi.s: libraries/HAL_Drivers/drv_spi.c.s
 libraries/HAL_Drivers/drv_spi.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\rtthread.elf.dir\build.make CMakeFiles/rtthread.elf.dir/libraries/HAL_Drivers/drv_spi.c.s
 .PHONY : libraries/HAL_Drivers/drv_spi.c.s
-
-libraries/HAL_Drivers/drv_tim.obj: libraries/HAL_Drivers/drv_tim.c.obj
-.PHONY : libraries/HAL_Drivers/drv_tim.obj
-
-# target to build an object file
-libraries/HAL_Drivers/drv_tim.c.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\rtthread.elf.dir\build.make CMakeFiles/rtthread.elf.dir/libraries/HAL_Drivers/drv_tim.c.obj
-.PHONY : libraries/HAL_Drivers/drv_tim.c.obj
-
-libraries/HAL_Drivers/drv_tim.i: libraries/HAL_Drivers/drv_tim.c.i
-.PHONY : libraries/HAL_Drivers/drv_tim.i
-
-# target to preprocess a source file
-libraries/HAL_Drivers/drv_tim.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\rtthread.elf.dir\build.make CMakeFiles/rtthread.elf.dir/libraries/HAL_Drivers/drv_tim.c.i
-.PHONY : libraries/HAL_Drivers/drv_tim.c.i
-
-libraries/HAL_Drivers/drv_tim.s: libraries/HAL_Drivers/drv_tim.c.s
-.PHONY : libraries/HAL_Drivers/drv_tim.s
-
-# target to generate assembly for a file
-libraries/HAL_Drivers/drv_tim.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\rtthread.elf.dir\build.make CMakeFiles/rtthread.elf.dir/libraries/HAL_Drivers/drv_tim.c.s
-.PHONY : libraries/HAL_Drivers/drv_tim.c.s
 
 libraries/HAL_Drivers/drv_usart.obj: libraries/HAL_Drivers/drv_usart.c.obj
 .PHONY : libraries/HAL_Drivers/drv_usart.obj
@@ -1431,30 +1383,6 @@ rt-thread/components/drivers/hwcrypto/hwcrypto.s: rt-thread/components/drivers/h
 rt-thread/components/drivers/hwcrypto/hwcrypto.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\rtthread.elf.dir\build.make CMakeFiles/rtthread.elf.dir/rt-thread/components/drivers/hwcrypto/hwcrypto.c.s
 .PHONY : rt-thread/components/drivers/hwcrypto/hwcrypto.c.s
-
-rt-thread/components/drivers/hwtimer/hwtimer.obj: rt-thread/components/drivers/hwtimer/hwtimer.c.obj
-.PHONY : rt-thread/components/drivers/hwtimer/hwtimer.obj
-
-# target to build an object file
-rt-thread/components/drivers/hwtimer/hwtimer.c.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\rtthread.elf.dir\build.make CMakeFiles/rtthread.elf.dir/rt-thread/components/drivers/hwtimer/hwtimer.c.obj
-.PHONY : rt-thread/components/drivers/hwtimer/hwtimer.c.obj
-
-rt-thread/components/drivers/hwtimer/hwtimer.i: rt-thread/components/drivers/hwtimer/hwtimer.c.i
-.PHONY : rt-thread/components/drivers/hwtimer/hwtimer.i
-
-# target to preprocess a source file
-rt-thread/components/drivers/hwtimer/hwtimer.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\rtthread.elf.dir\build.make CMakeFiles/rtthread.elf.dir/rt-thread/components/drivers/hwtimer/hwtimer.c.i
-.PHONY : rt-thread/components/drivers/hwtimer/hwtimer.c.i
-
-rt-thread/components/drivers/hwtimer/hwtimer.s: rt-thread/components/drivers/hwtimer/hwtimer.c.s
-.PHONY : rt-thread/components/drivers/hwtimer/hwtimer.s
-
-# target to generate assembly for a file
-rt-thread/components/drivers/hwtimer/hwtimer.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\rtthread.elf.dir\build.make CMakeFiles/rtthread.elf.dir/rt-thread/components/drivers/hwtimer/hwtimer.c.s
-.PHONY : rt-thread/components/drivers/hwtimer/hwtimer.c.s
 
 rt-thread/components/drivers/i2c/i2c-bit-ops.obj: rt-thread/components/drivers/i2c/i2c-bit-ops.c.obj
 .PHONY : rt-thread/components/drivers/i2c/i2c-bit-ops.obj
@@ -2784,30 +2712,6 @@ src/algorithm/QuaternionEKF/QuaternionEKF.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\rtthread.elf.dir\build.make CMakeFiles/rtthread.elf.dir/src/algorithm/QuaternionEKF/QuaternionEKF.c.s
 .PHONY : src/algorithm/QuaternionEKF/QuaternionEKF.c.s
 
-src/algorithm/filter/filter32.obj: src/algorithm/filter/filter32.c.obj
-.PHONY : src/algorithm/filter/filter32.obj
-
-# target to build an object file
-src/algorithm/filter/filter32.c.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\rtthread.elf.dir\build.make CMakeFiles/rtthread.elf.dir/src/algorithm/filter/filter32.c.obj
-.PHONY : src/algorithm/filter/filter32.c.obj
-
-src/algorithm/filter/filter32.i: src/algorithm/filter/filter32.c.i
-.PHONY : src/algorithm/filter/filter32.i
-
-# target to preprocess a source file
-src/algorithm/filter/filter32.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\rtthread.elf.dir\build.make CMakeFiles/rtthread.elf.dir/src/algorithm/filter/filter32.c.i
-.PHONY : src/algorithm/filter/filter32.c.i
-
-src/algorithm/filter/filter32.s: src/algorithm/filter/filter32.c.s
-.PHONY : src/algorithm/filter/filter32.s
-
-# target to generate assembly for a file
-src/algorithm/filter/filter32.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\rtthread.elf.dir\build.make CMakeFiles/rtthread.elf.dir/src/algorithm/filter/filter32.c.s
-.PHONY : src/algorithm/filter/filter32.c.s
-
 src/algorithm/kalman_filter/kalman_filter.obj: src/algorithm/kalman_filter/kalman_filter.c.obj
 .PHONY : src/algorithm/kalman_filter/kalman_filter.obj
 
@@ -3024,53 +2928,29 @@ src/modules/msg/drv_msg.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\rtthread.elf.dir\build.make CMakeFiles/rtthread.elf.dir/src/modules/msg/drv_msg.c.s
 .PHONY : src/modules/msg/drv_msg.c.s
 
-src/modules/rc/dbus/rc_dbus.obj: src/modules/rc/dbus/rc_dbus.c.obj
-.PHONY : src/modules/rc/dbus/rc_dbus.obj
+src/modules/rc/sbus/rc_sbus.obj: src/modules/rc/sbus/rc_sbus.c.obj
+.PHONY : src/modules/rc/sbus/rc_sbus.obj
 
 # target to build an object file
-src/modules/rc/dbus/rc_dbus.c.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\rtthread.elf.dir\build.make CMakeFiles/rtthread.elf.dir/src/modules/rc/dbus/rc_dbus.c.obj
-.PHONY : src/modules/rc/dbus/rc_dbus.c.obj
+src/modules/rc/sbus/rc_sbus.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\rtthread.elf.dir\build.make CMakeFiles/rtthread.elf.dir/src/modules/rc/sbus/rc_sbus.c.obj
+.PHONY : src/modules/rc/sbus/rc_sbus.c.obj
 
-src/modules/rc/dbus/rc_dbus.i: src/modules/rc/dbus/rc_dbus.c.i
-.PHONY : src/modules/rc/dbus/rc_dbus.i
-
-# target to preprocess a source file
-src/modules/rc/dbus/rc_dbus.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\rtthread.elf.dir\build.make CMakeFiles/rtthread.elf.dir/src/modules/rc/dbus/rc_dbus.c.i
-.PHONY : src/modules/rc/dbus/rc_dbus.c.i
-
-src/modules/rc/dbus/rc_dbus.s: src/modules/rc/dbus/rc_dbus.c.s
-.PHONY : src/modules/rc/dbus/rc_dbus.s
-
-# target to generate assembly for a file
-src/modules/rc/dbus/rc_dbus.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\rtthread.elf.dir\build.make CMakeFiles/rtthread.elf.dir/src/modules/rc/dbus/rc_dbus.c.s
-.PHONY : src/modules/rc/dbus/rc_dbus.c.s
-
-src/modules/rc/keyboard/keyboard.obj: src/modules/rc/keyboard/keyboard.c.obj
-.PHONY : src/modules/rc/keyboard/keyboard.obj
-
-# target to build an object file
-src/modules/rc/keyboard/keyboard.c.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\rtthread.elf.dir\build.make CMakeFiles/rtthread.elf.dir/src/modules/rc/keyboard/keyboard.c.obj
-.PHONY : src/modules/rc/keyboard/keyboard.c.obj
-
-src/modules/rc/keyboard/keyboard.i: src/modules/rc/keyboard/keyboard.c.i
-.PHONY : src/modules/rc/keyboard/keyboard.i
+src/modules/rc/sbus/rc_sbus.i: src/modules/rc/sbus/rc_sbus.c.i
+.PHONY : src/modules/rc/sbus/rc_sbus.i
 
 # target to preprocess a source file
-src/modules/rc/keyboard/keyboard.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\rtthread.elf.dir\build.make CMakeFiles/rtthread.elf.dir/src/modules/rc/keyboard/keyboard.c.i
-.PHONY : src/modules/rc/keyboard/keyboard.c.i
+src/modules/rc/sbus/rc_sbus.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\rtthread.elf.dir\build.make CMakeFiles/rtthread.elf.dir/src/modules/rc/sbus/rc_sbus.c.i
+.PHONY : src/modules/rc/sbus/rc_sbus.c.i
 
-src/modules/rc/keyboard/keyboard.s: src/modules/rc/keyboard/keyboard.c.s
-.PHONY : src/modules/rc/keyboard/keyboard.s
+src/modules/rc/sbus/rc_sbus.s: src/modules/rc/sbus/rc_sbus.c.s
+.PHONY : src/modules/rc/sbus/rc_sbus.s
 
 # target to generate assembly for a file
-src/modules/rc/keyboard/keyboard.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\rtthread.elf.dir\build.make CMakeFiles/rtthread.elf.dir/src/modules/rc/keyboard/keyboard.c.s
-.PHONY : src/modules/rc/keyboard/keyboard.c.s
+src/modules/rc/sbus/rc_sbus.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\rtthread.elf.dir\build.make CMakeFiles/rtthread.elf.dir/src/modules/rc/sbus/rc_sbus.c.s
+.PHONY : src/modules/rc/sbus/rc_sbus.c.s
 
 src/modules/referee/Referee.obj: src/modules/referee/Referee.c.obj
 .PHONY : src/modules/referee/Referee.obj
@@ -3465,18 +3345,12 @@ help:
 	@echo ... libraries/HAL_Drivers/drv_gpio.obj
 	@echo ... libraries/HAL_Drivers/drv_gpio.i
 	@echo ... libraries/HAL_Drivers/drv_gpio.s
-	@echo ... libraries/HAL_Drivers/drv_pwm.obj
-	@echo ... libraries/HAL_Drivers/drv_pwm.i
-	@echo ... libraries/HAL_Drivers/drv_pwm.s
 	@echo ... libraries/HAL_Drivers/drv_soft_i2c.obj
 	@echo ... libraries/HAL_Drivers/drv_soft_i2c.i
 	@echo ... libraries/HAL_Drivers/drv_soft_i2c.s
 	@echo ... libraries/HAL_Drivers/drv_spi.obj
 	@echo ... libraries/HAL_Drivers/drv_spi.i
 	@echo ... libraries/HAL_Drivers/drv_spi.s
-	@echo ... libraries/HAL_Drivers/drv_tim.obj
-	@echo ... libraries/HAL_Drivers/drv_tim.i
-	@echo ... libraries/HAL_Drivers/drv_tim.s
 	@echo ... libraries/HAL_Drivers/drv_usart.obj
 	@echo ... libraries/HAL_Drivers/drv_usart.i
 	@echo ... libraries/HAL_Drivers/drv_usart.s
@@ -3604,9 +3478,6 @@ help:
 	@echo ... rt-thread/components/drivers/hwcrypto/hwcrypto.obj
 	@echo ... rt-thread/components/drivers/hwcrypto/hwcrypto.i
 	@echo ... rt-thread/components/drivers/hwcrypto/hwcrypto.s
-	@echo ... rt-thread/components/drivers/hwtimer/hwtimer.obj
-	@echo ... rt-thread/components/drivers/hwtimer/hwtimer.i
-	@echo ... rt-thread/components/drivers/hwtimer/hwtimer.s
 	@echo ... rt-thread/components/drivers/i2c/i2c-bit-ops.obj
 	@echo ... rt-thread/components/drivers/i2c/i2c-bit-ops.i
 	@echo ... rt-thread/components/drivers/i2c/i2c-bit-ops.s
@@ -3773,9 +3644,6 @@ help:
 	@echo ... src/algorithm/QuaternionEKF/QuaternionEKF.obj
 	@echo ... src/algorithm/QuaternionEKF/QuaternionEKF.i
 	@echo ... src/algorithm/QuaternionEKF/QuaternionEKF.s
-	@echo ... src/algorithm/filter/filter32.obj
-	@echo ... src/algorithm/filter/filter32.i
-	@echo ... src/algorithm/filter/filter32.s
 	@echo ... src/algorithm/kalman_filter/kalman_filter.obj
 	@echo ... src/algorithm/kalman_filter/kalman_filter.i
 	@echo ... src/algorithm/kalman_filter/kalman_filter.s
@@ -3803,12 +3671,9 @@ help:
 	@echo ... src/modules/msg/drv_msg.obj
 	@echo ... src/modules/msg/drv_msg.i
 	@echo ... src/modules/msg/drv_msg.s
-	@echo ... src/modules/rc/dbus/rc_dbus.obj
-	@echo ... src/modules/rc/dbus/rc_dbus.i
-	@echo ... src/modules/rc/dbus/rc_dbus.s
-	@echo ... src/modules/rc/keyboard/keyboard.obj
-	@echo ... src/modules/rc/keyboard/keyboard.i
-	@echo ... src/modules/rc/keyboard/keyboard.s
+	@echo ... src/modules/rc/sbus/rc_sbus.obj
+	@echo ... src/modules/rc/sbus/rc_sbus.i
+	@echo ... src/modules/rc/sbus/rc_sbus.s
 	@echo ... src/modules/referee/Referee.obj
 	@echo ... src/modules/referee/Referee.i
 	@echo ... src/modules/referee/Referee.s

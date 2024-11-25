@@ -43,7 +43,7 @@
 #endif /* BSP_USING_RC_DBUS */
 #ifdef BSP_USING_RC_SBUS
 #include "rc_sbus.h"
-#endif /* BSP_USING_RC_sBUS */
+#endif /* BSP_USING_RC_SBUS */
 #ifdef BSP_USING_RC_KEYBOARD
 #include "keyboard.h"
 #endif /* BSP_USING_RC_KEYBOARD */

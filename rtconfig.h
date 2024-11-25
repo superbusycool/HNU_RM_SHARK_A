@@ -116,7 +116,6 @@
 #define RT_USING_PIN
 #define RT_USING_ADC
 #define RT_USING_PWM
-#define RT_USING_HWTIMER
 #define RT_USING_SDIO
 #define RT_SDIO_STACK_SIZE 512
 #define RT_SDIO_THREAD_PRIORITY 15
@@ -396,31 +395,6 @@
 
 #define BSP_I2C1_SCL_PIN 68
 #define BSP_I2C1_SDA_PIN 69
-#define BSP_USING_PWM
-#define BSP_USING_PWM12
-#define BSP_USING_PWM12_CH1
-#define BSP_USING_PWM4
-#define BSP_USING_PWM4_CH1
-#define BSP_USING_PWM4_CH2
-#define BSP_USING_PWM4_CH3
-#define BSP_USING_PWM4_CH4
-#define BSP_USING_PWM5
-#define BSP_USING_PWM5_CH1
-#define BSP_USING_PWM5_CH2
-#define BSP_USING_PWM5_CH3
-#define BSP_USING_PWM5_CH4
-#define BSP_USING_PWM2
-#define BSP_USING_PWM2_CH1
-#define BSP_USING_PWM2_CH2
-#define BSP_USING_PWM2_CH3
-#define BSP_USING_PWM2_CH4
-#define BSP_USING_PWM8
-#define BSP_USING_PWM8_CH1
-#define BSP_USING_PWM8_CH2
-#define BSP_USING_PWM8_CH3
-#define BSP_USING_PWM8_CH4
-#define BSP_USING_SPI
-#define BSP_USING_SPI5
 
 /* Notice: PA8 --> 8; PC9 --> 41 */
 
@@ -435,10 +409,8 @@
 #define BSP_USING_MAG
 #define BSP_USING_IST8310
 #define BSP_USING_IMU
-#define BSP_USING_RC_DBUS
-#define BSP_USING_REFEREE
-#define BSP_USING_RC_KEYBOARD
 #define BSP_USING_MPU6500
+#define BSP_USING_RC_SBUS
 /* end of RoboMaster Modules */
 
 /* RoboMaster Algorithms */
@@ -447,11 +419,11 @@
 #define BSP_USING_QUATERNIONESF
 #define BSP_USING_KALMAN_FILTER
 #define BSP_USING_RAMP
-#define BSP_USING_FILTER
 /* end of RoboMaster Algorithms */
 
 /* RoboMaster Tasks */
 
+#define BSP_USING_INS_TASK
 #define BSP_USING_MOTOR_TASK
 #define BSP_USING_CMD_TASK
 #define BSP_USING_CHASSIS_TASK
@@ -460,7 +432,6 @@
 #define BSP_USING_TRANSMISSION_TASK
 #define BSP_USING_SHOOT_TASK
 #define BSP_USING_REFEREE_TASK
-#define BSP_USING_INS_TASK
 /* end of RoboMaster Tasks */
 
 /* Board extended module Drivers */

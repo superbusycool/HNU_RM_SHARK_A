@@ -55,7 +55,6 @@ INCLUDE_DIRECTORIES(
 	src/algorithm/user_lib
 	src/algorithm/pid
 	src/algorithm/QuaternionEKF
-	src/algorithm/filter
 	src/algorithm/kalman_filter
 	src/algorithm/ramp
 	src/algorithm/arm_math
@@ -68,8 +67,7 @@ INCLUDE_DIRECTORIES(
 	src/modules/mag/ist8310
 	src/modules/imu
 	src/modules/imu/A6500
-	src/modules/rc/dbus
-	src/modules/rc/keyboard
+	src/modules/rc/sbus
 	src/modules/referee
 	src/modules/referee/bsp_referee_UI
 	src/task
@@ -104,8 +102,8 @@ SET(PROJECT_SOURCES
 	rt-thread/components/libc/compilers/common/cunistd.c
 	rt-thread/components/libc/compilers/common/cwchar.c
 	rt-thread/components/libc/compilers/newlib/syscalls.c
-	rt-thread/components/libc/cplusplus/cxx_crt_init.c
 	rt-thread/components/libc/cplusplus/cxx_crt.cpp
+	rt-thread/components/libc/cplusplus/cxx_crt_init.c
 	rt-thread/libcpu/arm/common/atomic_arm.c
 	rt-thread/libcpu/arm/common/div0.c
 	rt-thread/libcpu/arm/common/showmem.c
@@ -115,7 +113,6 @@ SET(PROJECT_SOURCES
 	rt-thread/components/drivers/core/device.c
 	rt-thread/components/drivers/hwcrypto/hw_rng.c
 	rt-thread/components/drivers/hwcrypto/hwcrypto.c
-	rt-thread/components/drivers/hwtimer/hwtimer.c
 	rt-thread/components/drivers/i2c/i2c-bit-ops.c
 	rt-thread/components/drivers/i2c/i2c_core.c
 	rt-thread/components/drivers/i2c/i2c_dev.c
@@ -145,10 +142,8 @@ SET(PROJECT_SOURCES
 	libraries/HAL_Drivers/drv_common.c
 	libraries/HAL_Drivers/drv_crypto.c
 	libraries/HAL_Drivers/drv_gpio.c
-	libraries/HAL_Drivers/drv_pwm.c
 	libraries/HAL_Drivers/drv_soft_i2c.c
 	libraries/HAL_Drivers/drv_spi.c
-	libraries/HAL_Drivers/drv_tim.c
 	libraries/HAL_Drivers/drv_usart.c
 	libraries/STM32F4xx_HAL/CMSIS/Device/ST/STM32F4xx/Source/Templates/gcc/startup_stm32f427xx.s
 	rt-thread/components/dfs/dfs_v1/filesystems/devfs/devfs.c
@@ -159,10 +154,10 @@ SET(PROJECT_SOURCES
 	rt-thread/components/dfs/dfs_v1/src/dfs_file.c
 	rt-thread/components/dfs/dfs_v1/src/dfs_fs.c
 	rt-thread/components/dfs/dfs_v1/src/dfs_posix.c
-	rt-thread/components/finsh/msh_parse.c
+	rt-thread/components/finsh/cmd.c
 	rt-thread/components/finsh/shell.c
 	rt-thread/components/finsh/msh_file.c
-	rt-thread/components/finsh/cmd.c
+	rt-thread/components/finsh/msh_parse.c
 	rt-thread/components/finsh/msh.c
 	rt-thread/src/clock.c
 	rt-thread/src/components.c
@@ -176,69 +171,67 @@ SET(PROJECT_SOURCES
 	rt-thread/src/scheduler_up.c
 	rt-thread/src/thread.c
 	rt-thread/src/timer.c
-	libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_sd.c
-	libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_can.c
-	libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c.c
-	libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_sdmmc.c
-	libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_usart.c
-	libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.c
-	libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.c
-	libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.c
-	libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.c
-	libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_spi.c
-	libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cryp_ex.c
-	libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma_ex.c
-	libraries/STM32F4xx_HAL/CMSIS/Device/ST/STM32F4xx/Source/Templates/system_stm32f4xx.c
-	libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_qspi.c
-	libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.c
-	libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.c
-	libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.c
-	libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rng.c
-	libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c
 	libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_adc_ex.c
-	libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_lptim.c
-	libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.c
-	libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cec.c
-	libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_crc.c
-	libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cryp.c
-	libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.c
 	libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c_ex.c
-	libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_adc.c
+	libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cryp_ex.c
+	libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.c
+	libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.c
+	libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.c
+	libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_qspi.c
+	libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_sdmmc.c
+	libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.c
+	libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.c
+	libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma_ex.c
+	libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.c
+	libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c
+	libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.c
+	libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cryp.c
+	libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_lptim.c
+	libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_usart.c
+	libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_spi.c
 	libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.c
-	src/algorithm/filter/filter32.c
-	src/algorithm/kalman_filter/kalman_filter.c
+	libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.c
+	libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_adc.c
+	libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rng.c
+	libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cec.c
+	libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_can.c
+	libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_crc.c
+	libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.c
+	libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c.c
+	libraries/STM32F4xx_HAL/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_sd.c
+	libraries/STM32F4xx_HAL/CMSIS/Device/ST/STM32F4xx/Source/Templates/system_stm32f4xx.c
 	src/algorithm/QuaternionEKF/QuaternionEKF.c
 	src/algorithm/pid/pid.c
+	src/algorithm/kalman_filter/kalman_filter.c
 	src/algorithm/ramp/ramp.c
 	src/algorithm/user_lib/user_lib.c
-	src/modules/referee/bsp_referee_UI/BSP_CRC.c
-	src/modules/referee/bsp_referee_UI/fifo.c
-	src/modules/imu/A6500/A6500.c
-	src/modules/rc/dbus/rc_dbus.c
-	src/modules/motor/DJI_motor/dji_motor.c
 	src/modules/dwt/drv_dwt.c
 	src/modules/usr_callback.c
+	src/modules/imu/A6500/A6500.c
 	src/modules/referee/bsp_referee_UI/UI_print.c
-	src/modules/rc/keyboard/keyboard.c
+	src/modules/rc/sbus/rc_sbus.c
+	src/modules/motor/DJI_motor/dji_motor.c
+	src/modules/referee/bsp_referee_UI/BSP_CRC.c
+	src/modules/referee/bsp_referee_UI/fifo.c
 	src/modules/mag/ist8310/ist8310.c
 	src/modules/referee/bsp_referee_UI/Referee_system.c
-	src/modules/msg/drv_msg.c
 	src/modules/referee/Referee.c
+	src/modules/msg/drv_msg.c
+	src/task/shoot/shoot_task.c
 	src/task/gimbal/gimbal_task.c
-	src/task/referee/referee_task.c
 	src/task/motor/motor_task.c
 	src/task/chassis/chassis_task.c
+	src/task/transmission/transmission_task.c
+	src/task/referee/referee_task.c
+	src/task/cmd/cmd_task.c
 	src/task/robot.c
 	src/task/ins/ins_task.c
-	src/task/transmission/transmission_task.c
-	src/task/cmd/cmd_task.c
-	src/task/shoot/shoot_task.c
-	rt-thread/components/utilities/ulog/backend/console_be.c
 	rt-thread/components/utilities/ulog/ulog.c
+	rt-thread/components/utilities/ulog/backend/console_be.c
 )
 
 LINK_DIRECTORIES(
-	D:/HNU_RM_CodeStorage/HNU_A_Test_Try5/HNU_RM_SHARK_A/src/algorithm/arm_math
+	D:/HNU_RM_CodeStorage/HNU_A_Youstar/HNU_RM_SHARK_A/HNU_RM_SHARK_A/src/algorithm/arm_math
 )
 
 LINK_LIBRARIES(

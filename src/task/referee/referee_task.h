@@ -5,13 +5,13 @@
 #ifndef RTTHREAD_REFEREE_TASK_H
 #define RTTHREAD_REFEREE_TASK_H
 
-#include "drv_common.h"
-#include "Referee_system.h"
-#include "BSP_CRC.h"
-#include "string.h"
-#include "fifo.h"
-#include "stdint.h"
-#include "UI_print.h"
+//#include "drv_common.h"
+//#include "Referee_system.h"
+//#include "BSP_CRC.h"
+//#include "string.h"
+//#include "fifo.h"
+//#include "stdint.h"
+//#include "UI_print.h"
 //extern uint8_t RX_AgreementData_Buffer0[Agreement_RX_BUF_NUM];   //接收裁判系统返回数据的接收缓冲区0，该缓冲区设置的相当富裕
 //extern uint8_t RX_AgreementData_Buffer1[Agreement_RX_BUF_NUM];   //接收裁判系统返回数据的接收缓冲区1，该缓冲区设置的相当富裕
 //extern DMA_HandleTypeDef hdma_usart6_rx;

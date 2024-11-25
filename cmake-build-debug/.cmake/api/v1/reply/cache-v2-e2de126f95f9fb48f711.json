@@ -34,6 +34,22 @@
 			"value" : "C:/ENV/env-windows/tools/gnu_gcc/arm_gcc/mingw/bin/arm-none-eabi-ar.exe"
 		},
 		{
+			"name" : "CMAKE_ASM_COMPILER",
+			"properties" : 
+			[
+				{
+					"name" : "ADVANCED",
+					"value" : "1"
+				},
+				{
+					"name" : "HELPSTRING",
+					"value" : "(This variable does not exist and should not be used)"
+				}
+			],
+			"type" : "UNINITIALIZED",
+			"value" : ""
+		},
+		{
 			"name" : "CMAKE_ASM_COMPILER_AR",
 			"properties" : 
 			[
@@ -179,7 +195,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "d:/HNU_RM_CodeStorage/HNU_A_Test_Try5/HNU_RM_SHARK_A/cmake-build-debug"
+			"value" : "d:/HNU_RM_CodeStorage/HNU_A_Youstar/HNU_RM_SHARK_A/HNU_RM_SHARK_A/cmake-build-debug"
 		},
 		{
 			"name" : "CMAKE_CACHE_MAJOR_VERSION",
@@ -318,6 +334,22 @@
 			"value" : "C:/Program Files/JetBrains/CLion 2023.2.2/bin/cmake/win/x64/bin/ctest.exe"
 		},
 		{
+			"name" : "CMAKE_CXX_COMPILER",
+			"properties" : 
+			[
+				{
+					"name" : "ADVANCED",
+					"value" : "1"
+				},
+				{
+					"name" : "HELPSTRING",
+					"value" : "(This variable does not exist and should not be used)"
+				}
+			],
+			"type" : "UNINITIALIZED",
+			"value" : ""
+		},
+		{
 			"name" : "CMAKE_CXX_COMPILER_AR",
 			"properties" : 
 			[
@@ -428,6 +460,22 @@
 			],
 			"type" : "STRING",
 			"value" : "-O2 -g -DNDEBUG"
+		},
+		{
+			"name" : "CMAKE_C_COMPILER",
+			"properties" : 
+			[
+				{
+					"name" : "ADVANCED",
+					"value" : "1"
+				},
+				{
+					"name" : "HELPSTRING",
+					"value" : "(This variable does not exist and should not be used)"
+				}
+			],
+			"type" : "UNINITIALIZED",
+			"value" : ""
 		},
 		{
 			"name" : "CMAKE_C_COMPILER_AR",
@@ -719,7 +767,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "D:/HNU_RM_CodeStorage/HNU_A_Test_Try5/HNU_RM_SHARK_A/cmake-build-debug/CMakeFiles/pkgRedirects"
+			"value" : "D:/HNU_RM_CodeStorage/HNU_A_Youstar/HNU_RM_SHARK_A/HNU_RM_SHARK_A/cmake-build-debug/CMakeFiles/pkgRedirects"
 		},
 		{
 			"name" : "CMAKE_GENERATOR",
@@ -779,7 +827,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "D:/HNU_RM_CodeStorage/HNU_A_Test_Try5/HNU_RM_SHARK_A"
+			"value" : "D:/HNU_RM_CodeStorage/HNU_A_Youstar/HNU_RM_SHARK_A/HNU_RM_SHARK_A"
 		},
 		{
 			"name" : "CMAKE_INSTALL_PREFIX",
@@ -1431,7 +1479,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "D:/HNU_RM_CodeStorage/HNU_A_Test_Try5/HNU_RM_SHARK_A/cmake-build-debug"
+			"value" : "D:/HNU_RM_CodeStorage/HNU_A_Youstar/HNU_RM_SHARK_A/HNU_RM_SHARK_A/cmake-build-debug"
 		},
 		{
 			"name" : "rtthread_IS_TOP_LEVEL",
@@ -1455,7 +1503,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "D:/HNU_RM_CodeStorage/HNU_A_Test_Try5/HNU_RM_SHARK_A"
+			"value" : "D:/HNU_RM_CodeStorage/HNU_A_Youstar/HNU_RM_SHARK_A/HNU_RM_SHARK_A"
 		}
 	],
 	"kind" : "cache",
