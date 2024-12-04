@@ -15,8 +15,8 @@
 
 
 /* MPU6500所挂载的 SPI 设备名称及 CS 引脚 */
-#define SPI_MPU6500        "spi5"
-#define SPI_MPU6500_CS      GET_PIN(F,6)      // Nss/cs   PF6
+#define SPI_ADIS16467        "spi4"
+#define SPI_ADIS16467_CS      GET_PIN(E,4)      // Nss/cs   PE4
 
 
 /* 弹仓盖舵机所挂载的 PWM 设备及通道号 */

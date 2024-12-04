@@ -56,10 +56,10 @@ RM = "C:\Program Files\JetBrains\CLion 2023.2.2\bin\cmake\win\x64\bin\cmake.exe"
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = D:\HNU_RM_CodeStorage\HNU_A_Youstar\HNU_RM_SHARK_A\HNU_RM_SHARK_A
+CMAKE_SOURCE_DIR = D:\HNU_RM_CodeStorage\Shark_User_Define_Controler\HNU_RM_SHARK_A
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = D:\HNU_RM_CodeStorage\HNU_A_Youstar\HNU_RM_SHARK_A\HNU_RM_SHARK_A\cmake-build-debug
+CMAKE_BINARY_DIR = D:\HNU_RM_CodeStorage\Shark_User_Define_Controler\HNU_RM_SHARK_A\cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -86,9 +86,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start D:\HNU_RM_CodeStorage\HNU_A_Youstar\HNU_RM_SHARK_A\HNU_RM_SHARK_A\cmake-build-debug\CMakeFiles D:\HNU_RM_CodeStorage\HNU_A_Youstar\HNU_RM_SHARK_A\HNU_RM_SHARK_A\cmake-build-debug\\CMakeFiles\progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start D:\HNU_RM_CodeStorage\Shark_User_Define_Controler\HNU_RM_SHARK_A\cmake-build-debug\CMakeFiles D:\HNU_RM_CodeStorage\Shark_User_Define_Controler\HNU_RM_SHARK_A\cmake-build-debug\\CMakeFiles\progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start D:\HNU_RM_CodeStorage\HNU_A_Youstar\HNU_RM_SHARK_A\HNU_RM_SHARK_A\cmake-build-debug\CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start D:\HNU_RM_CodeStorage\Shark_User_Define_Controler\HNU_RM_SHARK_A\cmake-build-debug\CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -2832,29 +2832,29 @@ src/modules/dwt/drv_dwt.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\rtthread.elf.dir\build.make CMakeFiles/rtthread.elf.dir/src/modules/dwt/drv_dwt.c.s
 .PHONY : src/modules/dwt/drv_dwt.c.s
 
-src/modules/imu/A6500/A6500.obj: src/modules/imu/A6500/A6500.c.obj
-.PHONY : src/modules/imu/A6500/A6500.obj
+src/modules/imu/ADS16467/adis16467.obj: src/modules/imu/ADS16467/adis16467.c.obj
+.PHONY : src/modules/imu/ADS16467/adis16467.obj
 
 # target to build an object file
-src/modules/imu/A6500/A6500.c.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\rtthread.elf.dir\build.make CMakeFiles/rtthread.elf.dir/src/modules/imu/A6500/A6500.c.obj
-.PHONY : src/modules/imu/A6500/A6500.c.obj
+src/modules/imu/ADS16467/adis16467.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\rtthread.elf.dir\build.make CMakeFiles/rtthread.elf.dir/src/modules/imu/ADS16467/adis16467.c.obj
+.PHONY : src/modules/imu/ADS16467/adis16467.c.obj
 
-src/modules/imu/A6500/A6500.i: src/modules/imu/A6500/A6500.c.i
-.PHONY : src/modules/imu/A6500/A6500.i
+src/modules/imu/ADS16467/adis16467.i: src/modules/imu/ADS16467/adis16467.c.i
+.PHONY : src/modules/imu/ADS16467/adis16467.i
 
 # target to preprocess a source file
-src/modules/imu/A6500/A6500.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\rtthread.elf.dir\build.make CMakeFiles/rtthread.elf.dir/src/modules/imu/A6500/A6500.c.i
-.PHONY : src/modules/imu/A6500/A6500.c.i
+src/modules/imu/ADS16467/adis16467.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\rtthread.elf.dir\build.make CMakeFiles/rtthread.elf.dir/src/modules/imu/ADS16467/adis16467.c.i
+.PHONY : src/modules/imu/ADS16467/adis16467.c.i
 
-src/modules/imu/A6500/A6500.s: src/modules/imu/A6500/A6500.c.s
-.PHONY : src/modules/imu/A6500/A6500.s
+src/modules/imu/ADS16467/adis16467.s: src/modules/imu/ADS16467/adis16467.c.s
+.PHONY : src/modules/imu/ADS16467/adis16467.s
 
 # target to generate assembly for a file
-src/modules/imu/A6500/A6500.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\rtthread.elf.dir\build.make CMakeFiles/rtthread.elf.dir/src/modules/imu/A6500/A6500.c.s
-.PHONY : src/modules/imu/A6500/A6500.c.s
+src/modules/imu/ADS16467/adis16467.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\rtthread.elf.dir\build.make CMakeFiles/rtthread.elf.dir/src/modules/imu/ADS16467/adis16467.c.s
+.PHONY : src/modules/imu/ADS16467/adis16467.c.s
 
 src/modules/mag/ist8310/ist8310.obj: src/modules/mag/ist8310/ist8310.c.obj
 .PHONY : src/modules/mag/ist8310/ist8310.obj
@@ -3659,9 +3659,9 @@ help:
 	@echo ... src/modules/dwt/drv_dwt.obj
 	@echo ... src/modules/dwt/drv_dwt.i
 	@echo ... src/modules/dwt/drv_dwt.s
-	@echo ... src/modules/imu/A6500/A6500.obj
-	@echo ... src/modules/imu/A6500/A6500.i
-	@echo ... src/modules/imu/A6500/A6500.s
+	@echo ... src/modules/imu/ADS16467/adis16467.obj
+	@echo ... src/modules/imu/ADS16467/adis16467.i
+	@echo ... src/modules/imu/ADS16467/adis16467.s
 	@echo ... src/modules/mag/ist8310/ist8310.obj
 	@echo ... src/modules/mag/ist8310/ist8310.i
 	@echo ... src/modules/mag/ist8310/ist8310.s

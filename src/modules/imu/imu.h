@@ -23,8 +23,8 @@
 extern "C" {
 #endif
 
-#ifdef BSP_USING_MPU6500
-#include "A6500.h"
+#ifdef BSP_USING_ADS16467
+#include "adis16467.h"
 #endif /* BSP_USING_MPU6500 */
 
 /* ---------------------------------- GYRO ---------------------------------- */
@@ -75,6 +75,7 @@ struct imu_ops{
     rt_err_t (*imu_init)(void);
     rt_err_t (*gyro_read)(float data[3]);
     rt_err_t (*accel_read)(float data[3]);
+    rt_err_t (*burst_read)(float accel[3],float gyro[3],float temp);
     float (*temp_read)(void);
 };
 

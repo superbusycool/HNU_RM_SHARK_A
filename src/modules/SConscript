@@ -38,9 +38,9 @@ if GetDepend(['BSP_USING_IST8310']):
 if GetDepend(['BSP_USING_IMU']):
     path += [cwd + '/imu']
 
-if GetDepend(['BSP_USING_MPU6500']):
-    src += [cwd + '/imu/A6500/A6500.c']
-    path += [cwd + '/imu/A6500']
+if GetDepend(['BSP_USING_ADS16467']):
+    src += Glob(cwd + '/imu/ADS16467/adis16467.c')
+    path += [cwd + '/imu/ADS16467']
 
 if GetDepend(['BSP_USING_RC_DBUS']):
     src += Glob(cwd + '/rc/dbus/*.c')

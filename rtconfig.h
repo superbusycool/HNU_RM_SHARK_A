@@ -395,6 +395,8 @@
 
 #define BSP_I2C1_SCL_PIN 68
 #define BSP_I2C1_SDA_PIN 69
+#define BSP_USING_SPI
+#define BSP_USING_SPI4
 
 /* Notice: PA8 --> 8; PC9 --> 41 */
 
@@ -409,7 +411,7 @@
 #define BSP_USING_MAG
 #define BSP_USING_IST8310
 #define BSP_USING_IMU
-#define BSP_USING_MPU6500
+#define BSP_USING_ADS16467
 #define BSP_USING_RC_SBUS
 /* end of RoboMaster Modules */
 
